@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('num_compartidos');
             $table->integer('num_vistas');
             $table->enum('estado_moderacion',['rechazado','aprobado','en revision','eliminado']);
-            $table->timestamps('fecha_creacion');
+            $table->timestamps();
         });
     }
 

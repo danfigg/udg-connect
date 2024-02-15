@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('banner');
             $table->integer('num_participantes');
             $table->enum('estado_comunidad', ['activo', 'inactivo']);
-            $table->timestamps('fecha_creacion');
+            $table->timestamps();
         });
     }
 
