@@ -12,7 +12,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('posts/index',compact('posts'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts/create');    
     }
 
     /**
@@ -28,7 +29,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "titulo"=>"required|min:5|max:255",
+            "contenido"=>"required|min:5",
+            "semestre"=>"required|integer|min:1|max:10",
+        ]);
+
+        $post = new Post();
+        $post->titulo = $request->titulo;
+        $post->contenido = $request->contenido;
+        $post->semestre = $request->semestre;
+        $post->save();
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -36,7 +49,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts/show',compact('post'));
     }
 
     /**
@@ -44,7 +57,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts/edit',compact('post'));
     }
 
     /**
@@ -52,7 +65,18 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            "titulo"=>"required|min:5|max:255",
+            "contenido"=>"required|min:10",
+            "semestre"=>"required|integer|min:1|max:10",
+        ]);
+
+        $post->titulo = $request->titulo;
+        $post->contenido = $request->contenido; 
+        $post->semestre = $request->semestre;
+        $post->save();
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -60,6 +84,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

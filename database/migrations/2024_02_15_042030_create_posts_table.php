@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('contenido');
-            $table->integer('semestre');
+            $table->enum('semestre',['1','2','3','4','5','6','7','8','9','10','all']);
             $table->integer('num_compartidos')->default(0);
             $table->integer('num_vistas')->default(0);
             $table->enum('estado_moderacion',['rechazado','aprobado','en revision','eliminado'])->default('en revision');
