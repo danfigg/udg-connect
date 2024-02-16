@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('contenido');
             $table->integer('semestre');
-            $table->integer('num_compartidos');
-            $table->integer('num_vistas');
-            $table->enum('estado_moderacion',['rechazado','aprobado','en revision','eliminado']);
+            $table->integer('num_compartidos')->default(0);
+            $table->integer('num_vistas')->default(0);
+            $table->enum('estado_moderacion',['rechazado','aprobado','en revision','eliminado'])->default('en revision');
             $table->timestamps();
         });
     }
