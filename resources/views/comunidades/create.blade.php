@@ -34,9 +34,9 @@
         @enderror
 
         <label for="estado_comunidad">Estado de la comunidad</label>
-        <select name="estatus" id="estatus">
-            <option value="1">Activa</option>
-            <option value="0">Inactiva</option>
+        <select name="estado_comunidad" id="estatus">
+            <option value="activo">Activa</option>
+            <option value="inactivo">Inactiva</option>
         </select><br>
         @error('estatus')
             <p style="color: red">{{ $message }}</p>

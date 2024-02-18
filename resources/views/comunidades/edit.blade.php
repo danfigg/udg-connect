@@ -7,9 +7,9 @@
     <h1>Editar comunidad</h1>
     <a href="{{ route('comunidades.index')}}">Back to index</a><br><br>
 
-    <form action="{{ route('comunidades.update', $comunidad->id) }}" method="POST">
-        @method('PUT')
+    <form action="{{ route('comunidades.update', $comunidad) }}" method="POST">
         @csrf
+        @method('PUT')
         <label for="nombre">Nombre</label>
         <input type="text" name="nombre" value="{{$comunidad->nombre}}"><br>
         @error('nombre')
@@ -39,7 +39,6 @@
         @error('estado_comunidad')
             <p style="color: red">{{ $message }}</p>
         @enderror
-
         <button type="submit">Editar</button>
     </form>
 @endsection
