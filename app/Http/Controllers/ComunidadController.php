@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Comunidad;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ComunidadRequest;
 
@@ -33,7 +32,7 @@ class ComunidadController extends Controller
     public function store(ComunidadRequest $request): RedirectResponse
     {
         Comunidad::create($request->all());
-        return to_route('comunidades.index');
+        return redirect()->route('comunidades.index');
     }
 
     /**
@@ -58,7 +57,8 @@ class ComunidadController extends Controller
     public function update(ComunidadRequest $request, Comunidad $comunidad): RedirectResponse
     {
         $comunidad->update($request->all());
-        return to_route('comunidades.index');
+        dd($request->all());    
+        return redirect()->route('comunidades.index');
     }
 
     /**
@@ -67,6 +67,6 @@ class ComunidadController extends Controller
     public function destroy(Comunidad $comunidad): RedirectResponse
     {
         $comunidad->delete();
-        return to_route('comunidades.index');
+        return redirect()->route('comunidades.index');
     }
 }

@@ -11,35 +11,39 @@
         @method('PUT')
         @csrf
         <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" value="{{$comunidad->nombre}}"><br>
+        <input type="text" name="nombre" value="{{ $comunidad->nombre }}"><br>
         @error('nombre')
             <p style="color: red">{{ $message }}</p>
         @enderror
 
         <label for="descripcion">Descripción</label>
-        <textarea name="descripcion" cols="30" rows="10">{{$comunidad->descripcion}}</textarea><br>
+        <textarea name="descripcion" cols="20" rows="5">{{ $comunidad->descripcion }}</textarea><br>
         @error('descripcion')
             <p style="color: red">{{ $message }}</p>
         @enderror
 
         <label for="reglas">Reglas</label>
-        <textarea name="reglas" id="reglas" cols="30" rows="10">{{$comunidad->reglas}}</textarea><br>
+        <textarea name="reglas" cols="20" rows="5">{{ $comunidad->reglas }}</textarea><br>
         @error('reglas')
             <p style="color: red">{{ $message }}</p>
         @enderror
 
         {{-- <label for="banner">Banner</label>
-        <input type="file" name="banner" id="banner"><br> --}}
+        <input type="file" name="banner" id="banner"><br>
+        @error('banner')
+            <p style="color: red">{{ $message }}</p>
+        @enderror --}}
 
         <label for="estado_comunidad">Estado de la comunidad</label>
-        <select name="estado_comunidad" id="estado_comunidad">
-            <option value="activo" {{$comunidad->estado_comunidad == 'activo' ? 'selected' : ''}}>Activa</option>
-            <option value="inactivo" {{$comunidad->estado_comunidad == 'inactivo' ? 'selected' : ''}}>Inactiva</option>
+        <select name="estado_comunidad">
+            <option value="activo">Activa</option>
+            <option value="inactivo">Inactiva</option>
         </select><br>
         @error('estado_comunidad')
             <p style="color: red">{{ $message }}</p>
         @enderror
 
-        <button type="submit">Editar</button>
+        <input type="submit" value="Update">
     </form>
+
 @endsection
