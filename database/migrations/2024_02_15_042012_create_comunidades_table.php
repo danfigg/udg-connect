@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('descripcion');
             $table->text('reglas');
             $table->string('banner');
-            $table->integer('num_participantes');
+            $table->integer('num_participantes')->default(0);
             $table->enum('estado_comunidad', ['activo', 'inactivo']);
             $table->timestamps();
         });
