@@ -56,8 +56,7 @@ class ComunidadController extends Controller
      */
     public function update(ComunidadRequest $request, Comunidad $comunidad): RedirectResponse
     {
-        $comunidad->update($request->all());
-        dd($request->all());    
+        $comunidad->update($request->all()); 
         return redirect()->route('comunidades.index');
     }
 
