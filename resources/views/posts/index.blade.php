@@ -6,6 +6,7 @@
     <title>Posts</title>
 </head>
 <body>
+    <a href="/">Index</a><br>
     <a href="{{route('posts.create')}}">Crear post</a>
     @foreach ($posts as $post)
         <div class="post">

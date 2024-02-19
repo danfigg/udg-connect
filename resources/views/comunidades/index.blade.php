@@ -4,6 +4,7 @@
 
 @section('content')
     <h1>Comunidades</h1>
+    <a href="/">Index</a><br>
     <a href="{{ route('comunidades.create') }}">Crear comunidad</a>
     <ul>
         @forelse ($comunidades as $comunidad)
