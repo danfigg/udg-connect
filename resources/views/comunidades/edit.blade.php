@@ -35,7 +35,7 @@
         @enderror --}}
 
         <label for="estado_comunidad">Estado de la comunidad</label>
-        <select name="estado_comunidad" id="estatus">
+        <select name="estado_comunidad">
             <option value="activo" {{ $comunidad->estado_comunidad == 'activo' ? 'selected' : '' }}>Activa</option>
             <option value="inactivo" {{ $comunidad->estado_comunidad == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
         </select><br>
