@@ -28,11 +28,11 @@
             <p style="color: red">{{ $message }}</p>
         @enderror
 
-        <label for="banner">Banner</label>
+        {{-- <label for="banner">Banner</label>
         <input type="file" name="banner" id="banner" value="{{ $comunidad->banner }}"><br>
         @error('banner')
             <p style="color: red">{{ $message }}</p>
-        @enderror
+        @enderror --}}
 
         <label for="estado_comunidad">Estado de la comunidad</label>
         <select name="estado_comunidad" id="estatus">
