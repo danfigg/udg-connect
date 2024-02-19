@@ -9,12 +9,12 @@
     <ul>
         @forelse ($comunidades as $comunidad)
             <li>
-                <a href="{{ route('comunidades.show', $comunidad->id) }}">{{ $comunidad->nombre }}</a>
-                <a href="{{ route('comunidades.edit', $comunidad->id) }}">Edit</a>
+                <a href="{{ route('comunidades.show', $comunidad->id) }}">{{ $comunidad->nombre }}</a><br>
+                <a href="{{ route('comunidades.edit', $comunidad->id) }}"><img src="/edit.svg" alt="Modificar comunidad"></a>
                 <form method="POST" action="{{ route('comunidades.destroy', $comunidad->id) }}">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" value="DELETE">
+                    <button><img src="/delete.svg" alt="Borrar comunidad"></button>
                 </form>  
             </li>
         @empty
