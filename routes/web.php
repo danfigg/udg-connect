@@ -10,3 +10,13 @@ Route::get('/', function () {
 
 Route::resource('/posts',PostController::class);
 Route::resource("/comunidades",ComunidadController::class)->parameters(['comunidades' => 'comunidad',]);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
