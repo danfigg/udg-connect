@@ -1,9 +1,12 @@
-@extends('layouts.app')
-
-@section('title', 'Editar')
-
-@section('content')
-    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Comunidades</title>
+</head>
+<body>
     <h1>Editar comunidad</h1>
     <a href="{{ route('comunidades.index')}}">Back to index</a><br><br>
 
@@ -42,4 +45,5 @@
 
         <button type="submit">Editar</button>
     </form>
-@endsection
+</body>
+</html>

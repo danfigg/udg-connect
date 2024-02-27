@@ -1,8 +1,12 @@
-@extends('layouts.app')
-
-@section('title', 'Crear')
-
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create comunidad</title>
+</head>
+<body>
     <h1>Crear comunidad</h1>
 
     <a href="{{ route('comunidades.index')}}">Back to index</a><br><br>
@@ -44,4 +48,6 @@
 
         <button type="submit">Crear</button>
     </form>
-@endsection
+    
+</body>
+</html>
