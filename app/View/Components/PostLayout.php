@@ -12,7 +12,7 @@ class PostLayout extends Component
      * Create a new component instance.
      */
     public $title;
-    publid $date;
+    public $date;
     public function __construct($title = "DEFAULT",$date="DEFAULT")
     {
         $this->title = $title;
