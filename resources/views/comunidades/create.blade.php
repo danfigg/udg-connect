@@ -16,13 +16,13 @@
         @enderror
 
         <label for="descripcion">Descripción</label>
-        <textarea name="descripcion" id="descripcion" cols="30" rows="10"></textarea><br>
+        <textarea name="descripcion" id="descripcion" cols="20" rows="5"></textarea><br>
         @error('descripcion')
             <p style="color: red">{{ $message }}</p>
         @enderror
 
         <label for="reglas">Reglas</label>
-        <textarea name="reglas" id="reglas" cols="30" rows="10"></textarea><br>
+        <textarea name="reglas" id="reglas" cols="20" rows="5"></textarea><br>
         @error('reglas')
             <p style="color: red">{{ $message }}</p>
         @enderror
@@ -34,11 +34,11 @@
         @enderror
 
         <label for="estado_comunidad">Estado de la comunidad</label>
-        <select name="estatus" id="estatus">
-            <option value="1">Activa</option>
-            <option value="0">Inactiva</option>
+        <select name="estado_comunidad" id="estatus">
+            <option value="activo">Activa</option>
+            <option value="inactivo">Inactivo</option>
         </select><br>
-        @error('estatus')
+        @error('estado_comunidad')
             <p style="color: red">{{ $message }}</p>
         @enderror
 
