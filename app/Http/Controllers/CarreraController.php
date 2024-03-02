@@ -13,6 +13,8 @@ class CarreraController extends Controller
     public function index()
     {
         //
+        $carreras = Carrera::all();
+        return view('carreras.index',compact('carreras'));
     }
 
     /**
@@ -20,7 +22,7 @@ class CarreraController extends Controller
      */
     public function create()
     {
-        //
+        return view('carreras.create');
     }
 
     /**
@@ -28,7 +30,14 @@ class CarreraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre'=>'required|min:8|max:255',
+        ]);
+        $carrera = new Carrera();
+        $carrera->nombre = $request->nombre;
+        $carrera->save();
+
+        return redirect()->route('carreras.index');
     }
 
     /**
@@ -44,7 +53,7 @@ class CarreraController extends Controller
      */
     public function edit(Carrera $carrera)
     {
-        //
+        return view('carreras.edit',compact('carrera'));
     }
 
     /**
@@ -53,6 +62,14 @@ class CarreraController extends Controller
     public function update(Request $request, Carrera $carrera)
     {
         //
+        $request->validate([
+            'nombre'=>'required|min:8|max:255',
+        ]);
+
+        $carrera->nombre = $request->nombre;
+        $carrera->save();
+
+        return redirect()->route('carreras.index');
     }
 
     /**
@@ -60,6 +77,7 @@ class CarreraController extends Controller
      */
     public function destroy(Carrera $carrera)
     {
-        //
+        $carrera->delete();
+        return redirect()->route('carreras.index');
     }
 }
