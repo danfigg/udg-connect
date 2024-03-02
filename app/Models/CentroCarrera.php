@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Carrera extends Model
+class CentroCarrera extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-
-    public function centros(){
-        return $this->belongsToMany(Centro::class,'centro-carreras');
-    }
+    
 }
+
