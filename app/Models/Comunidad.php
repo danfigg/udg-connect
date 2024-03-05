@@ -26,4 +26,8 @@ class Comunidad extends Model
     public function carreras(){
         return $this->belongsToMany(Carrera::class,'comunidad_carreras');
     }
+
+    public function usuarios(){
+        $this->belongsToMany(Comunidad::class,'comunidad_users');
+    }
 }
