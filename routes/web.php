@@ -3,15 +3,20 @@
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\ComunidadController;
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/posts',PostController::class);
-Route::resource('/comunidades',ComunidadController::class)->parameters(['comunidades' => 'comunidad',]);
-Route::resource('/carreras',CarreraController::class);
+Route::middleware(['auth'])->group(function(){
+    Route::resource('/comunidades',ComunidadController::class)->parameters(['comunidades' => 'comunidad',]); 
+    Route::resource('/carreras',CarreraController::class);
+    Route::resource('/posts',PostController::class);
+});
+
+
 
 Route::middleware([
     'auth:sanctum',

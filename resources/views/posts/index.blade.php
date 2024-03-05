@@ -6,6 +6,7 @@
     <title>Posts</title>
 </head>
 <body>
+    <x-nav-auth></x-nav-auth>
     <a href="{{route('posts.create')}}">Crear post</a>
     @foreach ($posts as $post)
         <div class="post">
