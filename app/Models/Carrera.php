@@ -14,4 +14,8 @@ class Carrera extends Model
     public function centros(){
         return $this->belongsToMany(Centro::class,'centro-carreras');
     }
+
+    public function comunidades(){
+        return $this->belongsToMany(Comunidad::class,'comunidad_carreras');
+    }
 }

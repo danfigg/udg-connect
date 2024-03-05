@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Comunidad extends Model
 {
@@ -21,4 +22,8 @@ class Comunidad extends Model
     protected $attributes = [
         'num_participantes' => 0,
     ];
+
+    public function carreras(){
+        return $this->belongsToMany(Carrera::class,'comunidad_carreras');
+    }
 }
