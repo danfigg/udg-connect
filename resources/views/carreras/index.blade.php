@@ -8,7 +8,9 @@
 <body>
     @foreach ($carreras as $carrera)
     <div class="carrera">
-        <h1 class="title">{{$carrera->nombre}}</h1>
+        <a href="{{route('carreras.show',$carrera)}}">
+            <h1 class="title">{{$carrera->nombre}}</h1>
+        </a>
         <form action="{{route('carreras.destroy',$carrera)}}" method="POST">
                 @csrf
                 @method('DELETE')

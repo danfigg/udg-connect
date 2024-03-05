@@ -45,7 +45,7 @@ class CarreraController extends Controller
      */
     public function show(Carrera $carrera)
     {
-        //
+        return view('carreras.show',compact('carrera'));
     }
 
     /**
