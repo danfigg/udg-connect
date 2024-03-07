@@ -11,6 +11,7 @@
     @foreach ($posts as $post)
         <div class="post">
             <h2>{{$post->titulo}}</h2>
+            <small>{{$post->user()->name}}</small>
             <p>{{$post->contenido}}</p> 
             <p>Semestre: {{$post->semestre}}</p>
             <form action="{{route('posts.destroy',$post)}}" method="POST">

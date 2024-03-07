@@ -7,10 +7,10 @@
         @click.prevent="$root.submit();">Log out</a>
     </ul>  
     </form>
-    <a href="{{route('logout')}}" 
+    {{-- <a href="{{route('logout')}}" 
         onclick="event.preventDefault();
         document.getElementById('logout-form').submit()">Logout</a>
-    </ul>
+    </ul> --}}
 
     @livewireScripts
 </div>

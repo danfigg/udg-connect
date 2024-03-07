@@ -13,4 +13,21 @@ class Comentario extends Model
         'cuerpo',
         'estado_moderacion',
     ];
+
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function post(){
+        return $this->belongsTo(Post::class);
+    }
+
+    public function comentario(){
+        return $this->belongsTo(Comentario::class);
+    }
+
+    public function comentarios(){
+        return $this->hasMany(Comentario::class);
+    }
 }

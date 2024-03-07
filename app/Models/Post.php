@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'titulo',
+        'contenido',
+        'semestre',
+        'user_id',
+    ];
+
+    // protected $guarded = [] list of properties protected mass assigment
+    public function comentarios(){
+        return $this->hasMany(Comentario::class);
+    }
+
+    public  function user() {
+        return $this->belongsTo(User::class);
+    }
 }

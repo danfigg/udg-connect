@@ -60,6 +60,14 @@ class User extends Authenticatable
     ];
 
     public function comunidades(){
-        $this->belongsToMany(User::class,'comunidad_users');
+        return $this->belongsToMany(User::class,'comunidad_users');
+    }
+
+    public function comentarios(){
+        return $this->hasMany(Comentario::class);
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
     }
 }
