@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comentario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComentarioController extends Controller
 {
@@ -28,7 +29,9 @@ class ComentarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge(["user_id"=>Auth::Id()]);
+        Comentario::create($request->all());
+        return redirect()->route('posts.index');
     }
 
     /**

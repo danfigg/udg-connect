@@ -11,7 +11,8 @@ class Comentario extends Model
 
     protected $fillable = [
         'cuerpo',
-        'estado_moderacion',
+        'user_id',
+        'post_id'
     ];
 
 

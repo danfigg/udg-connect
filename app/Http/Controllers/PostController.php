@@ -57,6 +57,10 @@ class PostController extends Controller
         return view('posts.edit',compact('post'));
     }
 
+    public function view_comentarios(Post $post){
+        
+    }
+
     /**
      * Update the specified resource in storage.
      */
