@@ -9,7 +9,7 @@ class Centro extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ["nombre"];
 
     public function carreras(){
         return $this->belongsToMany(Carrera::class,'centro-carreras');
