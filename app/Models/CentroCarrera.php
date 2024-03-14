@@ -9,7 +9,10 @@ class CentroCarrera extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    public $fillable = [
+        'centro_id',
+        'carrera_id',
+    ];
     
 }
 

@@ -15,4 +15,8 @@ class Evento extends Model
         'banner',
         'fecha_hora_evento'
     ];
+
+    public function participantes(){
+        return  $this->belongsToMany(User::class);
+    }
 }

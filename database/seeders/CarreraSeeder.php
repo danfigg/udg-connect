@@ -77,7 +77,7 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Agronegocios",
-              "Facultad(es)": "CUSUR, CUVALLES, CUCBA, CUCI"
+              "Facultad(es)": "CUSUR, CUVALLES, CUCBA"
             },
             {
               "Carrera": "Licenciatura en Biología",
@@ -117,7 +117,7 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Administración",
-              "Facultad(es)": "CUCI, CUCOSTA, CUCSUR, CULAGOS, CUTONALA, CUVALLES, SUV"
+              "Facultad(es)": "CUCOSTA, CUCSUR, CULAGOS, CUTONALA, CUVALLES, SUV"
             },
             {
               "Carrera": "Licenciatura en Administración de las Organizaciones",
@@ -141,15 +141,15 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Mercadotecnia",
-              "Facultad(es)": "CUCEA, CUCI"
+              "Facultad(es)": "CUCEA"
             },
             {
               "Carrera": "Licenciatura en Negocios Internacionales",
-              "Facultad(es)": "CUCEA, CUCI, CUSUR"
+              "Facultad(es)": "CUCEA, CUSUR"
             },
             {
               "Carrera": "Licenciatura en Recursos Humanos",
-              "Facultad(es)": "CUCEA, CUCI"
+              "Facultad(es)": "CUCEA"
             },
             {
               "Carrera": "Licenciatura en Turismo",
@@ -213,7 +213,7 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Ingeniería Industrial",
-              "Facultad(es)": "CUCEI, CUCI, CULAGOS"
+              "Facultad(es)": "CUCEI, CULAGOS"
             },
             {
               "Carrera": "Licenciatura en Ingeniería Mecánica Eléctrica",
@@ -225,7 +225,7 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Ingeniería Química",
-              "Facultad(es)": "CUCEI, CUCI"
+              "Facultad(es)": "CUCEI"
             },
             {
               "Carrera": "Licenciatura en Matemáticas",
@@ -237,7 +237,7 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Químico Farmacobiólogo",
-              "Facultad(es)": "CUCEI, CUCI"
+              "Facultad(es)": "CUCEI"
             },
             {
               "Carrera": "Licenciatura en Tecnologías e Información",
@@ -281,7 +281,7 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Psicología",
-              "Facultad(es)": "CUALTOS, CUCI, CUCOSTA, CUCS, CULAGOS, CUVALLES, CUNORTE, CUSUR"
+              "Facultad(es)": "CUALTOS, CUCOSTA, CUCS, CULAGOS, CUVALLES, CUNORTE, CUSUR"
             },
             {
               "Carrera": "Licenciatura en Seguridad Laboral, Protección Civil y Emergencias",
@@ -305,7 +305,7 @@ class CarreraSeeder extends Seeder
             },
             {
               "Carrera": "Licenciatura en Derecho o Abogado",
-              "Facultad(es)": "CUCI, CUCOSTA, CUCSUR, CULAGOS, CUTONALA, CUVALLES, CUALTOS, CUCSH, CUSUR"
+              "Facultad(es)": "CUCOSTA, CUCSUR, CULAGOS, CUTONALA, CUVALLES, CUALTOS, CUCSH, CUSUR"
             },
             {
               "Carrera": "Licenciatura en Didáctica del Frances como Lengua Extranjera",
