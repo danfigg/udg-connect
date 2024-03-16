@@ -14,6 +14,7 @@ class CentroCarreraSeeder extends Seeder
      */
     public function run(): void
     {
+        $centros = ['CUCEI','CUCEA','CUAAD','CUCBA','CUCS','CUCSH','CUALTOS','CUCIÉNEGA','CUCOSTA','CUCSUR','CULAGOS','CUNORTE','CUSUR','CUTONALÁ','CUVALLES'];
         $carreras = json_decode(
             '[
                 {
@@ -379,7 +380,7 @@ class CentroCarreraSeeder extends Seeder
                 $facultades = explode(", ",$carreras[$i]["Facultad(es)"]);
                 $carrera = $carreras[$i]['Carrera'];
                 foreach($facultades as $facultad){
-                    $facultad_id = DB::table('centros')->where('nombre',$facultad)->first('id');
+                    $facultad_id = array_search($facultad,$centros)+1;
                     CentroCarrera::create(
                       [
                         'carrera_id'=>$i+1,
