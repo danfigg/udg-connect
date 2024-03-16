@@ -25,7 +25,7 @@ class ComunidadRequest extends FormRequest
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'reglas' => 'required|string',
-            'banner' => 'required|string',
+            'banner' => 'string',
             /* 'num_participantes' => 'integer|min:0', */
             'estado_comunidad' => 'required|in:activo,inactivo',
         ];

@@ -129,5 +129,9 @@
                 </div>
             </div>
         </div>
+      <ul>
+        <li><a href="{{ route('comunidades.index')}}">Comunidades</a></li>
+        <li><a href="{{ route('posts.index')}}">Posts</a></li>
+      </ul>
     </body>
 </html>
