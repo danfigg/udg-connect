@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('semestre',['1','2','3','4','5','6','7','8','9','10','all']);
             $table->integer('num_compartidos')->default(0);
             $table->integer('num_vistas')->default(0);
+            $table->foreignId('user_id')->constrained();
             $table->enum('estado_moderacion',['rechazado','aprobado','en revision','eliminado'])->default('en revision');
             $table->timestamps();
         });

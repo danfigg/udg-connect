@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    // public function __construct(){
+    //     $this->middleware('auth')->only('index','delete','create');
+    //     $this->middleware('auth')->except('update');
+    // }
+
     public function index()
     {
         $posts = Post::all();
@@ -29,12 +36,8 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = new Post();
-        $post->titulo = $request->titulo;
-        $post->contenido = $request->contenido;
-        $post->semestre = $request->semestre;
-        $post->save();
-
+        $request->merge(["user_id" => Auth::Id()]);
+        Post::create($request->all());
         return redirect()->route('posts.index');
     }
 
@@ -54,16 +57,16 @@ class PostController extends Controller
         return view('posts.edit',compact('post'));
     }
 
+    public function view_comentarios(Post $post){
+        
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(PostRequest $request, Post $post)
     {
-        $post->titulo = $request->titulo;
-        $post->contenido = $request->contenido; 
-        $post->semestre = $request->semestre;
-        $post->save();
-
+        $post->update($request->all());
         return redirect()->route('posts.index');
     }
 

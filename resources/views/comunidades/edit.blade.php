@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title', 'Editar')
@@ -45,4 +46,5 @@
 
         <button type="submit">Editar</button>
     </form>
+
 @endsection
