@@ -13,7 +13,7 @@ class CentroSeeder extends Seeder
      */
     public function run(): void
     {
-        $centros = ['CUCEI','CUCEA','CUAAD','CUCBA','CUCS','CUCSH','CUALTOS','CUCIÉNEGA','CUCOSTA','CUCSUR','CULAGOS','CUNORTE','CUSUR','CUTONALÁ','CUVALLES'];
+        require base_path('/database/seeders/CentroAndCarreraInfo.php');
         foreach($centros as $nombre_centro) {
             Centro::create(
                 [
