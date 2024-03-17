@@ -24,7 +24,7 @@ class PostRequest extends FormRequest
         return [
             "titulo"=>"required|min:5|max:255",
             "contenido"=>"required|min:5",
-            "semestre"=>"required|integer|min:1|max:10",
+            "semestre"=>"required|string",
         ];
     }
 }

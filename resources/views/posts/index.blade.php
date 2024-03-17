@@ -1,8 +1,8 @@
 <x-app-layout>
-    <main class="flex flex-col items-center">
+    <main class="flex flex-col items-center gap-6">
         <a href="{{route('posts.create')}}" class="text-red-500 self-start ml-5 mt-3">Crear post</a>
         @foreach ($posts as $post)
-            <div class="post text-gray-100 py-5 px-7 border-gray-500 border rounded">
+            <div class="post text-gray-100 py-5 px-7 border-gray-500 border rounded min-w-[300px] max-w-xl">
                 <h1 class="text-xl">{{$post->titulo}}</h2>
                 <p class="text-gray-300 text-sm">Autor: {{$post->user->name}}</p>
                 <p class="text-gray-300 text-sm">Semestre: {{$post->semestre}}</p>
@@ -15,7 +15,7 @@
                         <button><img src="/delete.svg" alt="Borrar post"></button>
                     </form>
                 </div>
-                
+
                 <form method="POST" action="{{route('comentarios.store')}}">
                 <div class="w-full mt-3 mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                     @csrf
@@ -32,6 +32,7 @@
                 </div>
                 <a href="" class="text-gray-400 text-sm">Ver comentarios</a>
                 </form>
+            </div>  
     @endforeach
     </main>
 </x-app-layout>

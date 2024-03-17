@@ -24,7 +24,19 @@
         </div>
         <div class="field">
             <label for="semestre">Semestre:</label>
-            <input type="number" name="semestre" id="semestre" value="{{old('semestre')}}" min=1 max=10>
+            <select name="semestre" id="semestre">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="all">all</option>
+            </select>
             @error('semestre')
               <small class="error">{{ $message }}</small>
             @enderror

@@ -6,6 +6,7 @@ use App\Models\Comunidad;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ComunidadRequest;
+use App\Models\Centro;
 
 class ComunidadController extends Controller
 {
@@ -23,7 +24,8 @@ class ComunidadController extends Controller
      */
     public function create(): View
     {
-        return view('comunidades.create');
+        $centros = Centro::all();
+        return view('comunidades.create',compact('centros'));
     }
 
     /**

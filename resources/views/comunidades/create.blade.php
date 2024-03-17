@@ -25,6 +25,16 @@
             <p style="color: red">{{ $message }}</p>
         @enderror
 
+        <div class="mt-4">
+                <x-label for="centro" value="{{__('Centro')}}" />
+                <select name="centro" id="centro">
+                    <option value="0">Seleccione un centro</option>
+                    @foreach ($centros as $centro)
+                        <option value="{{$centro->id}}">{{$centro->nombre}}</option>
+                    @endforeach
+                </select>
+        <div>
+
         <label for="reglas">Reglas</label>
         <textarea name="reglas" id="reglas" cols="20" rows="5"></textarea><br>
         @error('reglas')
