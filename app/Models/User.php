@@ -60,7 +60,7 @@ class User extends Authenticatable
     ];
 
     public function comunidades(){
-        return $this->belongsToMany(User::class,'comunidad_users');
+        return $this->belongsToMany(Comunidad::class,'comunidad_users');
     }
 
     public function comentarios(){
@@ -73,5 +73,9 @@ class User extends Authenticatable
 
     public function eventos(){
         return $this->belongsToMany(Evento::class);
+    }
+
+    public function comunidads(){
+        return $this->hasMany(Comunidad::class);
     }
 }

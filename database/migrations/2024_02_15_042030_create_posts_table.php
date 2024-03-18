@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('num_compartidos')->default(0);
             $table->integer('num_vistas')->default(0);
             $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('comunidad_id');
+            $table->foreign('comunidad_id')->references('id')->on('comunidades');
             $table->enum('estado_moderacion',['rechazado','aprobado','en revision','eliminado'])->default('en revision');
             $table->timestamps();
         });

@@ -16,7 +16,9 @@ class Comunidad extends Model
         'descripcion',
         'reglas',
         'banner',
-        'estado_comunidad'
+        'estado_comunidad',
+        'user_id',
+        'centro_carreras_id',
     ];
 
     protected $attributes = [
@@ -28,6 +30,14 @@ class Comunidad extends Model
     }
 
     public function usuarios(){
-        $this->belongsToMany(Comunidad::class,'comunidad_users');
+        $this->belongsToMany(User::class,'comunidad_users');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
     }
 }

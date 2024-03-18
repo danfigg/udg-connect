@@ -15,6 +15,7 @@ class Post extends Model
         'contenido',
         'semestre',
         'user_id',
+        'comunidad_id',
     ];
 
     // protected $guarded = [] list of properties protected mass assigment
@@ -28,5 +29,9 @@ class Post extends Model
 
     public function etiquetas(){
         return $this->belongsToMany(Etiqueta::class);
+    }
+
+    public function comunidad(){
+        return $this->belongsTo(Comunidad::class);
     }
 }
