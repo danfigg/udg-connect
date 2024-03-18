@@ -20,8 +20,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->integer('num_participantes')->default(0);
             $table->enum('estado_comunidad', ['activo', 'inactivo']);
-            $table->unsignedBigInteger('centro_carreras_id');
-            $table->foreign('centro_carreras_id')->references('id')->on('centro_carreras');
             $table->timestamps();
         });
     }

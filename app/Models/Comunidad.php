@@ -18,7 +18,6 @@ class Comunidad extends Model
         'banner',
         'estado_comunidad',
         'user_id',
-        'centro_carreras_id',
     ];
 
     protected $attributes = [
@@ -26,7 +25,7 @@ class Comunidad extends Model
     ];
 
     public function carreras(){
-        return $this->belongsToMany(Carrera::class,'comunidad_carreras');
+        return $this->belongsToMany(CentroCarrera::class,'comunidad_carreras');
     }
 
     public function usuarios(){

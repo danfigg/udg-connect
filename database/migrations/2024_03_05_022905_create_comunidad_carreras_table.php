@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('comunidad_carreras', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('comunidad_id');
-            $table->unsignedBigInteger('carrera_id');
+            $table->unsignedBigInteger('centro_carrera_id');
             $table->foreign('comunidad_id')->references('id')->on('comunidades');
-            $table->foreign('carrera_id')->references('id')->on('carreras');
+            $table->foreign('centro_carrera_id')->references('id')->on('centro_carreras');
             $table->timestamps();
         });
     }

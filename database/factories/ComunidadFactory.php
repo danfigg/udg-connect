@@ -20,8 +20,7 @@ class ComunidadFactory extends Factory
             'nombre'=>$this->faker->sentence(3),
             'descripcion'=>$this->faker->text(100),
             'reglas'=>$this->faker->text(200),
-            'estado_comunidad'=>'activo',
-            'centro_carreras_id'=>$this->faker->numberBetween(1, 168),
+            'estado_comunidad'=>$this->faker->randomElement(['activo', 'inactivo']),
         ];
     }
 }

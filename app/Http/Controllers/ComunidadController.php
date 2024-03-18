@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ComunidadRequest;
 use App\Models\Centro;
+use Illuminate\Support\Facades\Auth;
 
 class ComunidadController extends Controller
 {
@@ -33,6 +34,9 @@ class ComunidadController extends Controller
      */
     public function store(ComunidadRequest $request): RedirectResponse
     {
+        $request->merge(['user_id' => Auth::id()]);
+        // Poner un valor por defecto para centro_carreras_id
+        $request->merge(['centro_carreras_id' => 1]);
         Comunidad::create($request->all());
         return redirect()->route('comunidades.index');
     }

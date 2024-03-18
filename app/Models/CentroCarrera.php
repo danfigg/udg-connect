@@ -13,6 +13,13 @@ class CentroCarrera extends Model
         'centro_id',
         'carrera_id',
     ];
-    
+
+    public function centro(){
+        return $this->belongsTo(Centro::class);
+    }
+
+    public function carrera(){
+        return $this->belongsTo(Carrera::class);
+    }
 }
 
