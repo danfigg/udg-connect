@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
+                        <img src="{{ asset('assets/logo.png') }}" class="block h-11 w-auto" alt="Logo UDG Connect">
                     </a>
                 </div>
 
