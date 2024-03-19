@@ -20,10 +20,7 @@ class Comunidad extends Model
         'user_id',
     ];
 
-    protected $attributes = [
-        'num_participantes' => 0,
-    ];
-
+    
     public function carreras(){
         return $this->belongsToMany(CentroCarrera::class,'comunidad_carreras');
     }

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('reglas');
             $table->string('banner')->nullable();
             $table->foreignId('user_id')->constrained();
-            $table->integer('num_participantes')->default(0);
             $table->enum('estado_comunidad', ['activo', 'inactivo']);
             $table->timestamps();
         });
