@@ -18,6 +18,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('/posts',PostController::class);
     Route::resource('/comentarios',ComentarioController::class);
     Route::get('/posts/comentarios',[PostController::class,'view_comentarios'])->name('posts.comentarios');
+    Route::post('/comunidades/{comunidad}/follower',[ComunidadController::class,'add_follower'])->name('comunidad.follower');
 });
 
 

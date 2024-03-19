@@ -74,4 +74,9 @@ class ComunidadController extends Controller
         $comunidad->delete();
         return redirect()->route('comunidades.index');
     }
+
+    public function add_follower(Comunidad $comunidad){
+        $comunidad->usuarios()->attach(Auth::id());
+        return redirect()->route('comunidades.show', $comunidad);
+    }
 }

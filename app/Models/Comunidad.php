@@ -29,7 +29,7 @@ class Comunidad extends Model
     }
 
     public function usuarios(){
-        $this->belongsToMany(User::class,'comunidad_users');
+        return $this->belongsToMany(User::class,'comunidad_users');
     }
 
     public function user(){
