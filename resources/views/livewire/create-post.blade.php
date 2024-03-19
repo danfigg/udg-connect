@@ -2,15 +2,16 @@
 <form action="{{route('posts.store')}}" method="post" class="dark:text-white">
         @csrf 
         <div class="flex flex-col">
+            <input type="hidden" name="comunidad_id" value="{{$comunidad_id}}">
             <label for="titulo">Titulo:</label>
-            <input type="text" name="titulo" id="titulo" value="{{old('titulo')}}">
+            <input class="text-black" ="text" name="titulo" id="titulo" value="{{old('titulo')}}">
             @error('titulo')
               <small class="error">{{ $message }}</small>
             @enderror
         </div>
         <div class="flex flex-col">
             <label for="contenido">Contenido:</label>
-            <textarea name="contenido" id="contenido" cols="30" rows="5" >{{old('contenido')}}</textarea>
+            <textarea class="text-black" name="contenido" id="contenido" cols="30" rows="5" >{{old('contenido')}}</textarea>
             @error('contenido')
               <small class="error">{{ $message }}</small>
             @enderror
