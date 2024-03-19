@@ -1,47 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Post</title>
-</head>
-<body>
-    <form action="{{route('posts.store')}}" method="post">
-        @csrf 
-        <div class="field">
-            <label for="titulo">Titulo:</label>
-            <input type="text" name="titulo" id="titulo" value="{{old('titulo')}}">
-            @error('titulo')
-              <small class="error">{{ $message }}</small>
-            @enderror
-        </div>
-        <div class="field">
-            <label for="contenido">Contenido:</label>
-            <textarea name="contenido" id="contenido" cols="30" rows="10" >{{old('contenido')}}</textarea>
-            @error('contenido')
-              <small class="error">{{ $message }}</small>
-            @enderror
-        </div>
-        <div class="field">
-            <label for="semestre">Semestre:</label>
-            <select name="semestre" id="semestre">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="all">all</option>
-            </select>
-            @error('semestre')
-              <small class="error">{{ $message }}</small>
-            @enderror
-        </div>
-        <button type="submit">Crear Post</button>
-    </form>
-</body>
-</html>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Create Post') }}
+        </h2>
+    </x-slot>
+    <div class="flex justify-center">
+        <!--Change comunidad_id to the id of the community you want to create a post in-->
+      <button class="mt-4 inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" 
+      onclick="Livewire.dispatch('openModal', { component: 'create-post', arguments: {comunidad_id:1, }})">Crear Post</button>
+    </div>
+    @livewire('wire-elements-modal')
+</x-app-layout>
