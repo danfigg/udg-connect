@@ -55,7 +55,8 @@ class ComunidadController extends Controller
      */
     public function edit(Comunidad $comunidad): View
     {
-        return view('comunidades.edit', compact('comunidad'));
+        $centros = Centro::all();
+        return view('comunidades.edit', compact('comunidad', 'centros'));
     }
 
     /**
