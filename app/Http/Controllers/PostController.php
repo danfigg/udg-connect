@@ -37,8 +37,8 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $request->merge(["user_id" => Auth::Id()]);
-        Post::create($request->all());
-        return redirect()->route('posts.index');
+        $post = Post::create($request->all());
+        return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 
     /**
@@ -75,7 +75,28 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if($post->user->id != Auth::id()){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
         $post->delete();
-        return redirect()->route('posts.index');
+        return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function aceptar(Post $post){
+        if($post->comunidad->user_id != Auth::id()){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        $post->estado_moderacion = 'aprobado';
+        $post->save();
+        return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function denegar(Post $post){
+        if($post->comunidad->user_id != Auth::id()){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        $post->estado_moderacion = 'rechazado';
+        $post->save();
+        return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 }

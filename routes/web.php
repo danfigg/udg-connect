@@ -19,6 +19,8 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('/comentarios',ComentarioController::class);
     Route::get('/posts/comentarios',[PostController::class,'view_comentarios'])->name('posts.comentarios');
     Route::post('/comunidades/{comunidad}/follower',[ComunidadController::class,'add_follower'])->name('comunidad.follower');
+    Route::put('/post/{post}/aceptar',[PostController::class, 'aceptar'])->name('post.aceptar');
+    Route::put('/post/{post}/rechazar',[PostController::class, 'rechazar'])->name('post.rechazar');
 });
 
 Route::middleware([

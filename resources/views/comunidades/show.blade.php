@@ -54,5 +54,14 @@
             </div>
         </details>
     </div>
+    <div>
+        @foreach ($comunidad->posts as $post)
+            @if($post->estado_moderacion == 'aprobado')
+                <x-post-show-card :post="$post" :admin="$comunidad->user"/>
+            @elseif($post->estado_moderacion == 'en revision' && $comunidad->user_id == Auth::id())
+                <x-post-show-card :post="$post" :admin="$comunidad->user" />
+            @endif
+        @endforeach
+    </div>
     
 </x-app-layout>

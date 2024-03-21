@@ -23,7 +23,7 @@ class Post extends Model
         return $this->hasMany(Comentario::class);
     }
 
-    public  function user() {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 
