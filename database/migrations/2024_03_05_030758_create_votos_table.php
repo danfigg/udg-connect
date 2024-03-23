@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('votos', function (Blueprint $table) {
             $table->id();
-            $table->enum('estado',["Positivo","Negativo"]);
+            $table->foreignId('user_id');
+            $table->foreignId('post_id');
+            $table->enum('estado',["positivo","negativo"]);
             $table->timestamps();
         });
     }

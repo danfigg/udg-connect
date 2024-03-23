@@ -21,6 +21,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/comunidades/{comunidad}/follower',[ComunidadController::class,'add_follower'])->name('comunidad.follower');
     Route::put('/post/{post}/aceptar',[PostController::class, 'aceptar'])->name('post.aceptar');
     Route::put('/post/{post}/rechazar',[PostController::class, 'rechazar'])->name('post.rechazar');
+    Route::put('/post/{post}/like',[PostController::class, 'like'])->name('post.like');
+    Route::put('/post/{post}/dislike',[PostController::class, 'dislike'])->name('post.dislike');
+    Route::get('/posts/{post}/comentarios',[PostController::class,'comentarios'])->name('posts.comentarios');
 });
 
 Route::middleware([

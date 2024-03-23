@@ -33,7 +33,7 @@
                 <p class="text-sm">{{ $comunidad->usuarios()->count() }}</p>
             </div>
             <button class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" 
-                    onclick="Livewire.dispatch('openModal', { component: 'create-post', arguments: {comunidad_id:{{$comunidad->id}} }})">Crear Post
+                    onclick="Livewire.dispatch('openModal', { component: 'create-post', arguments: {comunidad_id:{{$comunidad->id}}}})">Crear Post
             </button>
                 @livewire('wire-elements-modal')
             <form action="{{ route('comunidad.follower', $comunidad->id) }}" method="post">
@@ -63,5 +63,22 @@
             @endif
         @endforeach
     </div>
-    
+    <script>
+      const shareLinks = document.querySelectorAll('.share');
+      shareLinks.forEach(shareLink => {
+         shareLink.addEventListener('click', function(){
+            const url = this.value;
+            if(navigator.share){
+               navigator.share({
+                  title: 'Compartir UDG Connect Post',
+                  text: 'Compartir UDG Connect Post',
+                  url: url
+               }).then(() => console.log('Compartido')).catch((error) => console.log('Error al compartir', error));
+            }else{
+               console.log('No se puede compartir');
+            }
+         });
+
+        });
+   </script>
 </x-app-layout>

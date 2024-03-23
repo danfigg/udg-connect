@@ -16,11 +16,20 @@ class Post extends Model
         'semestre',
         'user_id',
         'comunidad_id',
+        'estado_moderacion',
     ];
 
     // protected $guarded = [] list of properties protected mass assigment
     public function comentarios(){
         return $this->hasMany(Comentario::class);
+    }
+
+    public function votos(){
+        return $this->hasMany(Voto::class);
+    }
+
+    public function sum_votos(){
+        return $this->votos()->where('estado','positivo')->count() - $this->votos()->where('estado','negativo')->count();
     }
 
     public function user() {
