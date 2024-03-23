@@ -1,7 +1,9 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <img src="{{ asset('assets/logo.png') }}" class="w-36" alt="Logo UDG Connect">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('assets/logo.png') }}" class="w-36" alt="Logo UDG Connect">
+            </a>
             <h3 class="text-center font-bold">UDG Connect</h3>
         </x-slot>
 
