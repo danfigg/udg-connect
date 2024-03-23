@@ -6,6 +6,7 @@ use App\Http\Controllers\ComunidadController;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\Authenticate;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,7 +32,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/siguiendo', function () {
+        $comunidades = Auth::user()->comunidades;
+        return view('dashboard',compact('comunidades'));
+    })->name('siguiendo');
 });

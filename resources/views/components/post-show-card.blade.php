@@ -9,9 +9,10 @@
 <!-- component -->
 <!-- post card -->
 <div id="{{'post-'.$post->id}}" class="flex dark:border dark:border-gray-400 bg-white shadow-lg rounded-lg mx-4 md:mx-auto mt-5 max-w-md md:max-w-2xl dark:bg-gray-900 dark:text-white"><!--horizantil margin is just for display-->
-   <div class="flex items-start px-4 py-6">
+<div class="flex items-start px-4 py-6">
    <svg class="dark:fill-white w-12 h-12 rounded-full object-cover mr-4 shadow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
-      <div class="">
+   <div>
+         <a href="{{route('comunidades.show',$post->comunidad)}}" class="dark:text-gray-400 hover:underline text-sm">comunidad/{{$post->comunidad->nombre}}</a>
          <div class="flex flex-col  justify-between">
             <h2 class="text-lg font-semibold dark:text-white text-gray-900 -mt-1">{{$post->user->name}}</h2>
             <small class="text-sm ">{{$post->created_at->format('D d M Y H:i:s')}}</small>

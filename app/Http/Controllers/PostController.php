@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Comunidad;
 use App\Models\Post;
-use App\Models\Voto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -68,7 +67,7 @@ class PostController extends Controller
     }
 
     public function comentarios(Post $post){
-        
+        return view('posts.comentarios',compact('post'));
     }
 
     /**
