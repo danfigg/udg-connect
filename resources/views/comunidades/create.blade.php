@@ -1,5 +1,5 @@
 <x-app-layout>
-    <button class="my-3 mx-20 p-2.5 bg-gray-400 dark:bg-gray-900 dark:text-white rounded-lg text-sm">
+    <button class="my-3 mx-20 p-2.5 bg-gray-300 dark:bg-gray-900 dark:text-white rounded-lg text-sm">
         <a class="text-md" href="{{ route('comunidades.index')}}">← Regresar</a>
     </button>
     <div class="my-2 mx-60 p-5 bg-gray-300 dark:bg-gray-900 dark:text-white rounded-lg">
