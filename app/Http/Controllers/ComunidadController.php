@@ -36,8 +36,6 @@ class ComunidadController extends Controller
     public function store(ComunidadRequest $request): RedirectResponse
     {
         $request->merge(['user_id' => Auth::id()]);
-        // Poner un valor por defecto para centro_carreras_id
-        $request->merge(['centro_carreras_id' => 1]);
         Comunidad::create($request->all());
         return redirect()->route('comunidades.index');
     }
@@ -55,7 +53,8 @@ class ComunidadController extends Controller
      */
     public function edit(Comunidad $comunidad): View
     {
-        return view('comunidades.edit', compact('comunidad'));
+        $centros = Centro::all();
+        return view('comunidades.edit', compact('comunidad', 'centros'));
     }
 
     /**
