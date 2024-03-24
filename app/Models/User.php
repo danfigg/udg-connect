@@ -78,4 +78,8 @@ class User extends Authenticatable
     public function comunidads(){
         return $this->hasMany(Comunidad::class);
     }
+
+    public function votos(){
+        return $this->hasMany(Voto::class);
+    }
 }

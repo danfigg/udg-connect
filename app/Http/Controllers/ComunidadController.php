@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ComunidadRequest;
 use App\Models\Centro;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ComunidadController extends Controller
 {
@@ -35,8 +36,6 @@ class ComunidadController extends Controller
     public function store(ComunidadRequest $request): RedirectResponse
     {
         $request->merge(['user_id' => Auth::id()]);
-        // Poner un valor por defecto para centro_carreras_id
-        $request->merge(['centro_carreras_id' => 1]);
         Comunidad::create($request->all());
         return redirect()->route('comunidades.index');
     }
@@ -54,7 +53,8 @@ class ComunidadController extends Controller
      */
     public function edit(Comunidad $comunidad): View
     {
-        return view('comunidades.edit', compact('comunidad'));
+        $centros = Centro::all();
+        return view('comunidades.edit', compact('comunidad', 'centros'));
     }
 
     /**
@@ -73,5 +73,16 @@ class ComunidadController extends Controller
     {
         $comunidad->delete();
         return redirect()->route('comunidades.index');
+    }
+
+    public function add_follower(Comunidad $comunidad){
+        $user = DB::table('comunidad_users')->where('comunidad_id', $comunidad->id)->where('user_id', Auth::id())->first();
+        if($user){
+            return redirect()->route('comunidades.show', $comunidad);
+        }
+        else{
+            $comunidad->usuarios()->attach(Auth::id());
+            return redirect()->route('comunidades.show', $comunidad);
+        }
     }
 }

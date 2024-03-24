@@ -24,7 +24,7 @@
         </div>
         <p class="text-sm dark:text-gray-300">Creador: {{$comunidad->user->name}}</p>
         <p class="text-sm dark:text-gray-300">{{ $comunidad->descripcion }}</p>
-        <p class="text-sm dark:text-gray-300">Participantes: {{ $comunidad->num_participantes }}</p>
+        <p class="text-sm dark:text-gray-300">Participantes: {{ $comunidad->usuarios()->count() }}</p>
         @if($comunidad->user_id == Auth::id())
             <div class="flex gap-3">
                 <a href="{{ route('comunidades.edit', $comunidad->id) }}"><img src="/edit.svg" alt="Modificar comunidad"></a>

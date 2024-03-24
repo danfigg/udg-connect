@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Comunidad;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -36,9 +38,16 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        $comunidad = Comunidad::find($request->comunidad_id);
+        if(Auth::id() == $comunidad->user_id){
+            $request->merge(["estado_moderacion" => "aprobado"]);
+        }
+        else{
+            $request->merge(["estado_moderacion" => "en revision"]);
+        }
         $request->merge(["user_id" => Auth::Id()]);
-        Post::create($request->all());
-        return redirect()->route('posts.index');
+        $post = Post::create($request->all());
+        return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 
     /**
@@ -57,8 +66,8 @@ class PostController extends Controller
         return view('posts.edit',compact('post'));
     }
 
-    public function view_comentarios(Post $post){
-        
+    public function comentarios(Post $post){
+        return view('posts.comentarios',compact('post'));
     }
 
     /**
@@ -66,8 +75,14 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
+        if($post->user->id != Auth::id()){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        if($post->comunidad->user_id != Auth::id()){
+            $post->estado_moderacion = 'en revision';
+        }
         $post->update($request->all());
-        return redirect()->route('posts.index');
+        return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 
     /**
@@ -75,7 +90,52 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if($post->user->id != Auth::id()){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
         $post->delete();
-        return redirect()->route('posts.index');
+        return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function aceptar(Post $post){
+        if($post->comunidad->user_id != Auth::id()){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        $post->estado_moderacion = 'aprobado';
+        $post->save();
+        return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function like(Post $post){
+        $voto = DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->first();
+        if($voto != null && $voto->estado == 'positivo'){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        else if($voto != null && $voto->estado == 'negativo'){
+            DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
+        }
+        DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'positivo']);
+        return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function dislike(Post $post){
+        $voto = DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->first();
+        if($voto != null && $voto->estado == 'negativo'){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        else if($voto != null && $voto->estado == 'positivo'){
+            DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
+        }
+        DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'negativo']);
+        return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function denegar(Post $post){
+        if($post->comunidad->user_id != Auth::id()){
+            return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        $post->estado_moderacion = 'rechazado';
+        $post->save();
+        return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 }

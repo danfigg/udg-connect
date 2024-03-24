@@ -18,18 +18,20 @@ class Comunidad extends Model
         'banner',
         'estado_comunidad',
         'user_id',
+        'centro_id',
     ];
 
-    protected $attributes = [
-        'num_participantes' => 0,
-    ];
-
+    
     public function carreras(){
         return $this->belongsToMany(CentroCarrera::class,'comunidad_carreras');
     }
 
+    public function centro(){
+        return $this->belongsTo(Centro::class);
+    }
+
     public function usuarios(){
-        $this->belongsToMany(User::class,'comunidad_users');
+        return $this->belongsToMany(User::class,'comunidad_users');
     }
 
     public function user(){
