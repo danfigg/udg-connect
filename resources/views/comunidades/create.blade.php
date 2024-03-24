@@ -7,42 +7,46 @@
 
         <form action="{{ route('comunidades.store') }}" method="POST" class="space-y-3 mx-10">
             @csrf
+        
             <div class="flex space-x-3">
                 <div class="w-1/2 flex flex-col">
                     <label for="nombre" class="mb-1 ">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="border rounded-md px-2 py-1 text-sm dark:text-black">
+                    <input type="text" name="nombre" id="nombre" class="border rounded-md px-2 py-1 text-sm dark:text-black" value="{{ old('nombre') }}">
                     @error('nombre')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-    
+        
                 <div class="w-1/2 flex flex-col">
                     <x-label for="centro_id" :value="__('Centro')" class="mb-2" />
                     <select name="centro_id" id="centro_id" class="border rounded-md px-2 py-1 text-sm dark:text-black">
                         <option value="0">Seleccione un centro</option>
                         @foreach ($centros as $centro)
-                            <option value="{{$centro->id}}">{{$centro->nombre}}</option>
+                            <option value="{{$centro->id}}" {{ old('centro_id') == $centro->id ? 'selected' : '' }}>{{$centro->nombre}}</option>
                         @endforeach
                     </select>
+                    @error('centro_id')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
-
+        
             <div class="flex flex-col">
                 <label for="descripcion" class="mb-1">Descripción</label>
-                <textarea name="descripcion" id="descripcion" cols="20" rows="5" class="border rounded-md px-2 py-1 text-sm resize-none dark:text-black"></textarea>
+                <textarea name="descripcion" id="descripcion" cols="20" rows="5" class="border rounded-md px-2 py-1 text-sm resize-none dark:text-black">{{ old('descripcion') }}</textarea>
                 @error('descripcion')
                     <p class="text-red-500">{{ $message }}</p>
                 @enderror
             </div>
-
+        
             <div class="flex flex-col">
                 <label for="reglas" class="mb-1">Reglas</label>
-                <textarea name="reglas" id="reglas" cols="20" rows="5" class="border rounded-md px-2 py-1 text-sm resize-none dark:text-black"></textarea>
+                <textarea name="reglas" id="reglas" cols="20" rows="5" class="border rounded-md px-2 py-1 text-sm resize-none dark:text-black">{{ old('reglas') }}</textarea>
                 @error('reglas')
                     <p class="text-red-500">{{ $message }}</p>
                 @enderror
             </div>
-
+        
             <div class="flex space-x-3">
                 <div class="w-1/2 flex flex-col">
                     <label for="banner" class="mb-1">Banner</label>
@@ -51,23 +55,24 @@
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-    
+        
                 <div class="w-1/2 flex flex-col">
                     <label for="estado_comunidad" class="mb-1">Estado de la comunidad</label>
                     <select name="estado_comunidad" id="estatus" class="border rounded-md px-2 py-1 text-sm dark:text-black">
-                        <option value="" selected>-</option>
-                        <option value="activo">Activa</option>
-                        <option value="inactivo">Inactivo</option>
+                        <option value="" {{ old('estado_comunidad') == '' ? 'selected' : '' }}>-</option>
+                        <option value="activo" {{ old('estado_comunidad') == 'activo' ? 'selected' : '' }}>Activa</option>
+                        <option value="inactivo" {{ old('estado_comunidad') == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
                     </select>
                     @error('estado_comunidad')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
-            
+        
             <div class="flex justify-end">
                 <button type="submit" class="bg-blue-800 dark:bg-blue-600 text-white font-bold py-2 px-4 rounded">Crear</button>
             </div>
         </form>
+        
     </div>
 </x-app-layout>

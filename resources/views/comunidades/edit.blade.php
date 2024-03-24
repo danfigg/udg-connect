@@ -25,6 +25,9 @@
                             <option value="{{$centro->id}}" @selected($comunidad->centro_id == $centro->id)>{{$centro->nombre}}</option>
                         @endforeach
                     </select>
+                    @error('centro_id')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
