@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('semestre',['1','2','3','4','5','6','7','8','9','10','all']);
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('comunidad_id');
-            $table->foreign('comunidad_id')->references('id')->on('comunidades');
+            $table->foreign('comunidad_id')->references('id')->on('comunidades')->onDelete('cascade');
             $table->enum('estado_moderacion',['rechazado','aprobado','en revision'])->default('en revision');
             $table->timestamps();
         });

@@ -14,6 +14,13 @@ class ComunidadRequest extends FormRequest
         return true;
     }
 
+    public function messages()
+    {
+        return [
+            'centro_id.exists' => 'Center selected does not exist.',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,7 +33,7 @@ class ComunidadRequest extends FormRequest
             'descripcion' => 'required|string',
             'reglas' => 'required|string',
             'banner' => 'string|nullable',
-            /* 'num_participantes' => 'integer|min:0', */
+            'centro_id' => 'required|integer|exists:centros,id',
             'estado_comunidad' => 'required|in:activo,inactivo',
         ];
     }

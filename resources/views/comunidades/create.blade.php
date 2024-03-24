@@ -25,6 +25,9 @@
                             <option value="{{$centro->id}}" {{ old('centro_id') == $centro->id ? 'selected' : '' }}>{{$centro->nombre}}</option>
                         @endforeach
                     </select>
+                    @error('centro_id')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
         
