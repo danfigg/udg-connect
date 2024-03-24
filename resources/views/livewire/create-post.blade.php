@@ -4,14 +4,14 @@
         <div class="flex flex-col">
             <input type="hidden" name="comunidad_id" value="{{$comunidad_id}}">
             <label for="titulo">Titulo:</label>
-            <input class="text-black" ="text" name="titulo" id="titulo" value="{{old('titulo')}}">
+            <input class="text-black" name="titulo" id="titulo" value="{{old('titulo')??$post->titulo??''}}">
             @error('titulo')
               <small class="error">{{ $message }}</small>
             @enderror
         </div>
         <div class="flex flex-col">
             <label for="contenido">Contenido:</label>
-            <textarea class="text-black" name="contenido" id="contenido" cols="30" rows="5" >{{old('contenido')}}</textarea>
+            <textarea class="text-black" name="contenido" id="contenido" cols="30" rows="5" >{{old('contenido')??$post->contenido??''}}</textarea>
             @error('contenido')
               <small class="error">{{ $message }}</small>
             @enderror
@@ -19,17 +19,10 @@
         <div class="flex flex-col">
             <label for="semestre">Semestre:</label>
             <select class="text-black" name="semestre" id="semestre">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="all">all</option>
+              @for ($i = 1; $i <= 10; $i++)
+                <option value="{{ $i }}" {{ isset($post['semestre']) && $post['semestre'] == $i ? 'selected' : '' }}>{{ $i }}</option>
+              @endfor
+              <option value="all" {{ isset($post['semestre']) && $post['semestre'] == 'all' ? 'selected' : '' }}>all</option>
             </select>
             @error('semestre')
               <small class="error">{{ $message }}</small>

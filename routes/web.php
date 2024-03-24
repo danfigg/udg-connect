@@ -6,6 +6,7 @@ use App\Http\Controllers\ComunidadController;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\Authenticate;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,11 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('/comentarios',ComentarioController::class);
     Route::get('/posts/comentarios',[PostController::class,'view_comentarios'])->name('posts.comentarios');
     Route::post('/comunidades/{comunidad}/follower',[ComunidadController::class,'add_follower'])->name('comunidad.follower');
+    Route::put('/post/{post}/aceptar',[PostController::class, 'aceptar'])->name('post.aceptar');
+    Route::put('/post/{post}/rechazar',[PostController::class, 'rechazar'])->name('post.rechazar');
+    Route::put('/post/{post}/like',[PostController::class, 'like'])->name('post.like');
+    Route::put('/post/{post}/dislike',[PostController::class, 'dislike'])->name('post.dislike');
+    Route::get('/posts/{post}/comentarios',[PostController::class,'comentarios'])->name('posts.comentarios');
 });
 
 Route::middleware([
@@ -26,7 +32,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/siguiendo', function () {
+        $comunidades = Auth::user()->comunidades;
+        return view('dashboard',compact('comunidades'));
+    })->name('siguiendo');
 });
