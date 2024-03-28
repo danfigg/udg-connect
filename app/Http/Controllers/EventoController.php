@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventoRequest;
 use App\Models\Evento;
 use Illuminate\Http\Request;
+USE Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class EventoController extends Controller
 {
@@ -12,47 +15,50 @@ class EventoController extends Controller
      */
     public function index()
     {
-        //
+        $eventos = Evento::all();
+        return view('eventos.index', compact('eventos'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('eventos.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EventoRequest $request): RedirectResponse
     {
-        //
+        Evento::create($request->all());
+        return redirect()->route('eventos.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Evento $evento)
+    public function show(Evento $evento): View
     {
-        //
+        return view('eventos.show', compact('evento'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Evento $evento)
+    public function edit(Evento $evento): View
     {
-        //
+        return view('eventos.edit', compact('evento'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Evento $evento)
+    public function update(EventoRequest $request, Evento $evento)
     {
-        //
+        $evento->update($request->all());
+        return redirect()->route('eventos.index');
     }
 
     /**
@@ -60,6 +66,7 @@ class EventoController extends Controller
      */
     public function destroy(Evento $evento)
     {
-        //
+        $evento->delete();
+        return redirect()->route('eventos.index');
     }
 }

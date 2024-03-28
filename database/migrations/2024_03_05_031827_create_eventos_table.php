@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');   
             $table->string('descripcion');   
-            $table->string('banner');
+            $table->string('banner')->nullable();
             $table->dateTime('fecha_hora_evento');   
             $table->timestamps();
         });
