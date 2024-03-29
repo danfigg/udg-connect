@@ -25,7 +25,7 @@
             </div>
             <div class="flex flex-col">
                 <label for="fecha_hora_evento">Fecha y hora:</label>
-                <input type="datetime-local" name="fecha_hora_evento" id="fecha_hora_evento" value="{{ old('fecha_hora_evento', $evento->fecha_hora_evento ? $evento->fecha_hora_evento->format('Y-m-d\TH:i') : '') }}">
+                <input type="datetime-local" class="text-black" name="fecha_hora_evento" id="fecha_hora_evento" value="{{ old('fecha_hora_evento') ? old('fecha_hora_evento') : ''  }}">
                 @error('fecha_hora_evento')
                     <small class="error">{{ $message }}</small>
                 @enderror

@@ -29,7 +29,7 @@
             </div>
             <div class="flex flex-col">
                 <label for="fecha_hora_evento">Fecha y hora:</label>
-                <input type="datetime-local" name="fecha_hora_evento" id="fecha_hora_evento" value="{{ $evento->fecha_hora_evento ? date('Y-m-d\TH:i', strtotime($evento->fecha_hora_evento)) : '' }}">
+                <input type="datetime-local" class="text-black" name="fecha_hora_evento" id="fecha_hora_evento" value="{{ $evento->fecha_hora_evento ? date('Y-m-d\TH:i', strtotime($evento->fecha_hora_evento)) : '' }}">
                 @error('fecha_hora_evento')
                     <small class="error">{{ $message }}</small>
                 @enderror

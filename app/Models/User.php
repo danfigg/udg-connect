@@ -75,6 +75,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Evento::class);
     }
 
+    public function eventosCreados(){
+        return $this->hasMany(Evento::class);
+    }
+
     public function comunidads(){
         return $this->hasMany(Comunidad::class);
     }

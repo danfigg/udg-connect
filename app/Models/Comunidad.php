@@ -41,4 +41,8 @@ class Comunidad extends Model
     public function posts(){
         return $this->hasMany(Post::class);
     }
+
+    public function eventos(){
+        return $this->hasMany(Evento::class);
+    }
 }

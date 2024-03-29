@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nombre');   
             $table->string('descripcion');   
             $table->string('banner')->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('comunidad_id')->constrained();
             $table->dateTime('fecha_hora_evento');   
             $table->timestamps();
         });

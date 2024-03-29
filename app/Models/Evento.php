@@ -19,4 +19,12 @@ class Evento extends Model
     public function participantes(){
         return  $this->belongsToMany(User::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function comunidad(){
+        return $this->belongsTo(Comunidad::class);
+    }
 }
