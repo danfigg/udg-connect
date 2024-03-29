@@ -13,7 +13,10 @@ class Evento extends Model
         'nombre',
         'descripcion',
         'banner',
-        'fecha_hora_evento'
+        'fecha_hora_evento',
+        'user_id',
+        'comunidad_id',
+        'estado_moderacion',
     ];
 
     public function participantes(){

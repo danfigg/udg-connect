@@ -28,6 +28,9 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/post/{post}/like',[PostController::class, 'like'])->name('post.like');
     Route::put('/post/{post}/dislike',[PostController::class, 'dislike'])->name('post.dislike');
     Route::get('/posts/{post}/comentarios',[PostController::class,'comentarios'])->name('posts.comentarios');
+
+    Route::put('/evento/{evento}/aceptar',[EventoController::class, 'aceptar'])->name('evento.aceptar');
+    Route::put('/evento/{evento}/rechazar',[EventoController::class, 'rechazar'])->name('evento.rechazar');
 });
 
 Route::middleware([

@@ -2,7 +2,7 @@
     <form action="{{route('eventos.store')}}" method="post" class="dark:text-white">
             @csrf 
             <div class="flex flex-col">
-                <input type="hidden" name="evento_id" value="{{$comunidad_id}}">
+                <input type="hidden" name="comunidad_id" value="{{$comunidad_id}}">
                 <label for="nombre">Nombre:</label>
                 <input class="text-black" name="nombre" id="nombre" value="{{old('nombre')??$evento->nombre??''}}">
                 @error('nombre')

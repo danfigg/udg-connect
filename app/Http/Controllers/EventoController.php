@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventoRequest;
+use App\Models\Comunidad;
 use App\Models\Evento;
 use Illuminate\Http\Request;
 USE Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class EventoController extends Controller
 {
@@ -32,8 +34,16 @@ class EventoController extends Controller
      */
     public function store(EventoRequest $request): RedirectResponse
     {
+        $comunidad = Comunidad::find($request->comunidad_id);
+        if(Auth::id() == $comunidad->user_id){
+            $request->merge(["estado_moderacion" => "aprobado"]);
+        }
+        else{
+            $request->merge(["estado_moderacion" => "en revision"]);
+        }
+        $request->merge(["user_id" => Auth::Id()]);
         Evento::create($request->all());
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$comunidad);
     }
 
     /**
@@ -58,7 +68,7 @@ class EventoController extends Controller
     public function update(EventoRequest $request, Evento $evento)
     {
         $evento->update($request->all());
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
     }
 
     /**
@@ -67,6 +77,24 @@ class EventoController extends Controller
     public function destroy(Evento $evento)
     {
         $evento->delete();
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+    }
+
+    public function aceptar(Evento $evento)
+    {
+        if($evento->comunidad->user_id != Auth::id()){
+            return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+        }
+        $evento->update(["estado_moderacion" => "aprobado"]);
+        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+    }
+
+    public function rechazar(Evento $evento)
+    {
+        if($evento->comunidad->user_id != Auth::id()){
+            return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+        }
+        $evento->update(["estado_moderacion" => "rechazado"]);
+        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
     }
 }
