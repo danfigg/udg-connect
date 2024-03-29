@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Evento extends Model
-{
+{   
+    protected $casts = [
+        'fecha_hora_evento' => 'datetime',
+    ];
+
     use HasFactory;
 
     protected $fillable = [
@@ -17,10 +21,43 @@ class Evento extends Model
         'user_id',
         'comunidad_id',
         'estado_moderacion',
+        'duracion_horas',
     ];
 
     public function participantes(){
         return  $this->belongsToMany(User::class);
+    }
+
+    public function calculate_finish_hour(){
+        return $this->fecha_hora_evento->addHours($this->duracion_horas)->format('H:i');
+    }
+
+    public function start_hour(){
+        return $this->fecha_hora_evento->format('H:i');
+    }
+
+    public function range_hours(){
+        return $this->start_hour() . ' - ' . $this->calculate_finish_hour();
+    }
+
+    public function is_past(){
+        return $this->fecha_hora_evento->isPast();
+    }
+
+    public function is_future(){
+        return $this->fecha_hora_evento->isFuture();
+    }
+
+    public function is_today(){
+        return $this->fecha_hora_evento->isToday();
+    }
+
+    public function date(){
+        return $this->fecha_hora_evento->format('d/m/Y');
+    }
+
+    public function short_description(){
+        return substr($this->descripcion, 0, 10) . '...';
     }
 
     public function user(){

@@ -26,6 +26,7 @@ class EventoRequest extends FormRequest
             'descripcion' => 'required|string',
             'banner' => 'string|nullable',
             'fecha_hora_evento' => 'required|date',
+            'duracion_horas'=>'required|min:1|max:24'
         ];
     }
 }

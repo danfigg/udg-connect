@@ -67,8 +67,11 @@ class EventoController extends Controller
      */
     public function update(EventoRequest $request, Evento $evento)
     {
+        if( Auth::id() != $evento->user_id){
+            return redirect()->route('eventos.index');
+        }
         $evento->update($request->all());
-        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+        return redirect()->route('eventos.index');
     }
 
     /**
@@ -76,25 +79,28 @@ class EventoController extends Controller
      */
     public function destroy(Evento $evento)
     {
+        if( Auth::id() != $evento->user_id){
+         return redirect()->route('eventos.index');
+        }
         $evento->delete();
-        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+        return redirect()->route('eventos.index');
     }
 
     public function aceptar(Evento $evento)
     {
         if($evento->comunidad->user_id != Auth::id()){
-            return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+            return redirect()->route('eventos.index');
         }
         $evento->update(["estado_moderacion" => "aprobado"]);
-        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+        return redirect()->route('eventos.index');
     }
 
     public function rechazar(Evento $evento)
     {
         if($evento->comunidad->user_id != Auth::id()){
-            return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+            return redirect()->route('eventos.index');
         }
         $evento->update(["estado_moderacion" => "rechazado"]);
-        return redirect()->route('comunidades.show',$evento->comunidad->user_id);
+        return redirect()->route('eventos.index');
     }
 }

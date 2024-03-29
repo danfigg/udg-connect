@@ -33,7 +33,14 @@
                 @error('fecha_hora_evento')
                     <small class="error">{{ $message }}</small>
                 @enderror
-            </div>                                 
+            </div>   
+            <div class="flex flex-col">
+                <label for="duracion_horas">Duracion del evento:</label>
+                <input type="number" class="text-black" name="duracion_horas" id="duracion_horas" min="1" max="24" value="{{ $evento->duracion_horas ? $evento->duracion_horas : 1  }}">
+                @error('fecha_hora_evento')
+                    <small class="error">{{ $message }}</small>
+                @enderror
+            </div>                                  
             <div class="flex justify-center">
                 <x-button class=" mt-5">Editar Post</x-button>
             </div>
