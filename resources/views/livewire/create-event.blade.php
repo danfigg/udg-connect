@@ -24,12 +24,12 @@
                 @enderror
             </div>
             <div class="flex flex-col">
-                <label for="fecha_hora_evento">Fecha:</label>
-                <input type="date" name="fecha_hora_evento" id="fecha_hora_evento" value="{{old('fecha_hora_evento')??$evento->fecha_hora_evento??''}}">
+                <label for="fecha_hora_evento">Fecha y hora:</label>
+                <input type="datetime-local" name="fecha_hora_evento" id="fecha_hora_evento" value="{{ old('fecha_hora_evento', $evento->fecha_hora_evento ? $evento->fecha_hora_evento->format('Y-m-d\TH:i') : '') }}">
                 @error('fecha_hora_evento')
-                  <small class="error">{{ $message }}</small>
+                    <small class="error">{{ $message }}</small>
                 @enderror
-            </div>
+            </div>            
             <x-button class="mt-5">Crear Evento</x-button>
     </form>
 </div>
