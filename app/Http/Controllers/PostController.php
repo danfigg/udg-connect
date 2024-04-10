@@ -7,6 +7,7 @@ use App\Models\Comunidad;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -63,6 +64,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        Gate::authorize('update',$post);
         return view('posts.edit',compact('post'));
     }
 
@@ -75,9 +77,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        if($post->user->id != Auth::id()){
-            return redirect()->route('comunidades.show',$post->comunidad_id);
-        }
+        Gate::authorize('update',$post);
         if($post->comunidad->user_id != Auth::id()){
             $post->estado_moderacion = 'en revision';
         }
@@ -98,9 +98,7 @@ class PostController extends Controller
     }
 
     public function aceptar(Post $post){
-        if($post->comunidad->user_id != Auth::id()){
-            return redirect()->route('comunidades.show',$post->comunidad_id);
-        }
+        Gate::authorize('canAcceptOrDeny',$post);
         $post->estado_moderacion = 'aprobado';
         $post->save();
         return redirect()->route('comunidades.show',$post->comunidad_id);
@@ -131,9 +129,7 @@ class PostController extends Controller
     }
 
     public function denegar(Post $post){
-        if($post->comunidad->user_id != Auth::id()){
-            return redirect()->route('comunidades.show',$post->comunidad_id);
-        }
+        Gate::authorize('canAcceptOrDeny',$post);
         $post->estado_moderacion = 'rechazado';
         $post->save();
         return redirect()->route('comunidades.show',$post->comunidad_id);
