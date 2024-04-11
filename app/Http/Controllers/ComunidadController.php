@@ -9,6 +9,7 @@ use App\Http\Requests\ComunidadRequest;
 use App\Models\Centro;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ComunidadController extends Controller
 {
@@ -53,6 +54,7 @@ class ComunidadController extends Controller
      */
     public function edit(Comunidad $comunidad): View
     {
+        Gate::authorize('update', $comunidad);
         $centros = Centro::all();
         return view('comunidades.edit', compact('comunidad', 'centros'));
     }
@@ -62,6 +64,7 @@ class ComunidadController extends Controller
      */
     public function update(ComunidadRequest $request, Comunidad $comunidad): RedirectResponse
     {
+        Gate::authorize('update', $comunidad);
         $comunidad->update($request->all()); 
         return redirect()->route('comunidades.index');
     }
@@ -71,6 +74,7 @@ class ComunidadController extends Controller
      */
     public function destroy(Comunidad $comunidad): RedirectResponse
     {
+        Gate::authorize('delete', $comunidad);
         $comunidad->delete();
         return redirect()->route('comunidades.index');
     }
