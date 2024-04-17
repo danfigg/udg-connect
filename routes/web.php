@@ -6,6 +6,7 @@ use App\Http\Controllers\ComunidadController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EventoController;
 use App\Http\Middleware\Authenticate;
+use App\Models\Comunidad;
 use App\Models\Evento;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
@@ -28,9 +29,11 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/post/{post}/like',[PostController::class, 'like'])->name('post.like');
     Route::put('/post/{post}/dislike',[PostController::class, 'dislike'])->name('post.dislike');
     Route::get('/posts/{post}/comentarios',[PostController::class,'comentarios'])->name('posts.comentarios');
-
     Route::put('/evento/{evento}/aceptar',[EventoController::class, 'aceptar'])->name('evento.aceptar');
     Route::put('/evento/{evento}/rechazar',[EventoController::class, 'rechazar'])->name('evento.rechazar'); 
+    Route::get('/comunidad/{comunidad}/add_career',[ComunidadController::class,'add_career_form'])->name('comunidad.add_careers_form');
+    Route::put('/comunidad/{comunidad}/add_career',[ComunidadController::class,'add_career'])->name('comunidad.store_careers');
+    Route::delete('/comunidad/{comunidad}/delete_career/{CentroCarrera}',[ComunidadController::class,'delete_career'])->name('comunidad.delete_career');
 });
 
 Route::middleware([

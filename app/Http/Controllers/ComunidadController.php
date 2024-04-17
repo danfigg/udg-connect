@@ -6,7 +6,11 @@ use App\Models\Comunidad;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ComunidadRequest;
+use App\Models\Carrera;
 use App\Models\Centro;
+use App\Models\CentroCarrera;
+use App\Models\ComunidadCarrera;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -88,5 +92,27 @@ class ComunidadController extends Controller
             $comunidad->usuarios()->attach(Auth::id());
             return redirect()->route('comunidades.show', $comunidad);
         }
+    }
+
+    public function add_career_form(Comunidad $comunidad){
+        Gate::authorize('addCareers', $comunidad);
+        $carreras = CentroCarrera::where('centro_id', $comunidad->centro_id)->get();
+        return view('comunidades.add_career', compact('comunidad','carreras'));
+    }
+
+    public function add_career(Request $request,Comunidad $comunidad){
+        Gate::authorize('addCareers',$comunidad);
+        // Check if the relation already exists
+        if(DB::table('comunidad_carreras')->where('comunidad_id',$comunidad->id)->where('centro_carrera_id',$request["centro_carrera_id"])->first()){
+            return redirect()->route('comunidades.show',$comunidad);
+        }
+        $comunidad->carreras()->attach($request["centro_carrera_id"]);
+        return redirect()->route('comunidades.show',$comunidad);
+    }
+
+    public function delete_career(Comunidad $comunidad,CentroCarrera $CentroCarrera){
+        Gate::authorize('addCareers',$comunidad);
+        $comunidad->carreras()->detach($CentroCarrera->id);
+        return redirect()->route('comunidades.show',$comunidad);
     }
 }

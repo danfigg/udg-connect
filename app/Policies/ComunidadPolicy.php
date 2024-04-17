@@ -51,4 +51,11 @@ class ComunidadPolicy
             ? Response::allow()
             : Response::deny('No puedes eliminar esta comunidad no te pertenece.');
     }
+
+    public function addCareers(User $user, Comunidad $comunidad): Response
+    {
+        return $user->id == $comunidad->user_id
+            ? Response::allow()
+            : Response::deny('No puedes agregar carreras a esta comunidad no te pertenece.');
+    }
 }
