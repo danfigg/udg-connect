@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventoRequest;
+use App\Mail\EventRegistered;
 use App\Models\Comunidad;
 use App\Models\Evento;
-use Illuminate\Http\Request;
-USE Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class EventoController extends Controller
 {
@@ -59,6 +61,7 @@ class EventoController extends Controller
      */
     public function edit(Evento $evento): View
     {
+        Gate::authorize('update', $evento);
         return view('eventos.edit', compact('evento'));
     }
 
@@ -67,9 +70,7 @@ class EventoController extends Controller
      */
     public function update(EventoRequest $request, Evento $evento)
     {
-        if( Auth::id() != $evento->user_id){
-            return redirect()->route('eventos.index');
-        }
+        Gate::authorize('update', $evento);
         $evento->update($request->all());
         return redirect()->route('eventos.index');
     }
@@ -79,15 +80,14 @@ class EventoController extends Controller
      */
     public function destroy(Evento $evento)
     {
-        if( Auth::id() != $evento->user_id){
-         return redirect()->route('eventos.index');
-        }
+        Gate::authorize('delete', $evento);
         $evento->delete();
         return redirect()->route('eventos.index');
     }
 
     public function aceptar(Evento $evento)
     {
+        Gate::authorize('update', $evento);
         if($evento->comunidad->user_id != Auth::id()){
             return redirect()->route('eventos.index');
         }
@@ -97,10 +97,28 @@ class EventoController extends Controller
 
     public function rechazar(Evento $evento)
     {
-        if($evento->comunidad->user_id != Auth::id()){
-            return redirect()->route('eventos.index');
-        }
+        Gate::authorize('update', $evento);
         $evento->update(["estado_moderacion" => "rechazado"]);
+        return redirect()->route('eventos.index');
+    }
+
+    public function registrar(Evento $evento)
+    {
+        Gate::authorize('register', $evento);
+        if($evento->participantes->contains(Auth::user())){
+            return redirect()->route('comunidades.show', $evento->comunidad);
+        }
+        Mail::to(Auth::user()->email)->send(new EventRegistered($evento));
+        $evento->participantes()->attach(Auth::id());
+        return redirect()->route('eventos.index');
+    }
+
+    public function desregistrar(Evento $evento)
+    {
+        if(!$evento->participantes->contains(Auth::user())){
+            return redirect()->route('comunidades.show', $evento->comunidad);
+        }
+        $evento->participantes()->detach(Auth::id());
         return redirect()->route('eventos.index');
     }
 }

@@ -5,10 +5,6 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ComunidadController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EventoController;
-use App\Http\Middleware\Authenticate;
-use App\Models\Comunidad;
-use App\Models\Evento;
-use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +30,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/comunidad/{comunidad}/add_career',[ComunidadController::class,'add_career_form'])->name('comunidad.add_careers_form');
     Route::put('/comunidad/{comunidad}/add_career',[ComunidadController::class,'add_career'])->name('comunidad.store_careers');
     Route::delete('/comunidad/{comunidad}/delete_career/{CentroCarrera}',[ComunidadController::class,'delete_career'])->name('comunidad.delete_career');
+    Route::post('/comunidad/evento/{evento}/registrar',[EventoController::class,'registrar'])->name('evento.registrar');
+    Route::delete('/comunidad/evento/{evento}/desregistrar',[EventoController::class,'desregistrar'])->name('evento.desregistrar');
 });
 
 Route::middleware([

@@ -59,6 +59,24 @@
         </div>
         @endif
         </div>
+        @can('register',$evento)
+            @if(!$evento->participantes->contains(Auth::id()))
+            <div class="mb-4 flex justify-center">
+                <form action="{{route('evento.registrar',[$evento])}}" method="POST">
+                    @csrf
+                    <x-button>Registrarse</x-button>
+                </form>
+            </div>
+            @else
+            <div class="mb-4 flex justify-center">
+                <form action="{{route('evento.desregistrar',[$evento])}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <x-button>Desregistrarse</x-button>
+                </form>
+            </div>
+            @endif
+        @endcan
     </div>
     </a>
 </div>

@@ -25,7 +25,7 @@ class Evento extends Model
     ];
 
     public function participantes(){
-        return  $this->belongsToMany(User::class);
+        return  $this->belongsToMany(User::class,'user_eventos');
     }
 
     public function calculate_finish_hour(){
@@ -36,8 +36,8 @@ class Evento extends Model
         return $this->fecha_hora_evento->format('H:i');
     }
 
-    public function range_hours(){
-        return $this->start_hour() . ' - ' . $this->calculate_finish_hour();
+    public function range_hours($separador=' - '){
+        return $this->start_hour() . $separador . $this->calculate_finish_hour();
     }
 
     public function is_past(){
