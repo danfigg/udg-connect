@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Comunidad;
+use App\Models\Etiqueta;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,12 +20,6 @@ class PostController extends Controller
     //     $this->middleware('auth')->only('index','delete','create');
     //     $this->middleware('auth')->except('update');
     // }
-
-    public function index()
-    {
-        $posts = Post::all();
-        return view('posts.index',compact('posts'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -48,6 +43,16 @@ class PostController extends Controller
         }
         $request->merge(["user_id" => Auth::Id()]);
         $post = Post::create($request->all());
+
+        // Separar las etiquetas
+        $tags = explode("#",$request->tags);
+        foreach($tags as $tag){
+            if($tag != ""){
+                $etiqueta = Etiqueta::firstOrCreate(['nombre' => strtolower($tag)]);
+                $post->etiquetas()->attach($etiqueta->id);
+            }
+        }
+
         return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 
@@ -65,6 +70,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         Gate::authorize('update',$post);
+        $post->tags = $post->etiquetas->pluck('nombre')->implode("#");
+        $post->tags = "#".$post->tags;
         return view('posts.edit',compact('post'));
     }
 
@@ -133,5 +140,10 @@ class PostController extends Controller
         $post->estado_moderacion = 'rechazado';
         $post->save();
         return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function etiqueta(Etiqueta $etiqueta){
+        $posts = $etiqueta->posts;
+        return view('posts.etiqueta',compact('posts','etiqueta'));
     }
 }

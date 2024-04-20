@@ -9,7 +9,7 @@
 <!-- component -->
 <!-- post card -->
 <div id="{{'post-'.$post->id}}" class="flex dark:border dark:border-gray-400 bg-white shadow-lg rounded-lg mx-4 md:mx-auto mt-5 max-w-md md:max-w-2xl dark:bg-gray-900 dark:text-white"><!--horizantil margin is just for display-->
-<div class="flex items-start px-4 py-6">
+<div class="flex gap-6 items-start px-4 py-6">
    @if($post->user->profile_photo_path)
       <img src="{{Storage::url($post->user->profile_photo_path)}}" class="w-12 h-12 rounded-full" alt="¨Profile photo of {{$post->user->name}}">
    @else
@@ -19,9 +19,14 @@
          <a href="{{route('comunidades.show',$post->comunidad)}}" class="dark:text-gray-400 hover:underline text-sm">comunidad/{{$post->comunidad->nombre}}</a>
          <div class="flex flex-col  justify-between">
             <h2 class="text-lg font-semibold dark:text-white text-gray-900 -mt-1">{{$post->user->name}}</h2>
-            <small class="text-sm ">{{$post->created_at->format('D d M Y H:i:s')}}</small>
-        </div>  
-        <small class="text-sm ">Semestre: {{$post->semestre}}</small>
+            <small class="text-sm ">{{$post->created_at->format('F j, Y, g:i a')}}</small>
+         </div>  
+        <small class="text-sm">Semestre: {{$post->semestre}}</small>
+         <div class="flex gap-2">
+            @foreach($post->etiquetas as $etiqueta)
+               <a href="{{route('etiqueta.posts',$etiqueta)}}" class="hover:underline text-green-300">#{{$etiqueta->nombre}}</a>
+            @endforeach
+         </div>
         <h1 class="text-lg">{{$post->titulo}}</h1>
         <p class="mt-3  text-sm">
             {{$post->contenido}}

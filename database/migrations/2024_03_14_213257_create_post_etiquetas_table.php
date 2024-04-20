@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('post_etiquetas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->constrained();
-            $table->foreignId('etiqueta_id')->constrained();
+            $table->foreignId('post_id');
+            $table->foreignId('etiqueta_id');
             $table->timestamps();
         });
     }

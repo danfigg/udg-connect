@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/comunidad/{comunidad}/add_career',[ComunidadController::class,'add_career'])->name('comunidad.store_careers');
     Route::delete('/comunidad/{comunidad}/delete_career/{CentroCarrera}',[ComunidadController::class,'delete_career'])->name('comunidad.delete_career');
     Route::post('/comunidad/evento/{evento}/registrar',[EventoController::class,'registrar'])->name('evento.registrar');
+    Route::get('/etiqueta/{etiqueta}/posts',[PostController::class,'etiqueta'])->name('etiqueta.posts');
     Route::delete('/comunidad/evento/{evento}/desregistrar',[EventoController::class,'desregistrar'])->name('evento.desregistrar');
 });
 
