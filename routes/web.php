@@ -12,7 +12,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth'])->group(function(){
+Route::group([
+    'prefix'=>'api',
+],
+function(){
+    Route::get('comunidad/{comunidad}/eventos',[EventoController::class,'api_index'])->name('eventos.api_index');
+});
+
+Route::middleware(['auth','verified'])->group(function(){
     Route::resource('/comunidades',ComunidadController::class)->parameters(['comunidades' => 'comunidad',]); 
     Route::resource('/carreras',CarreraController::class);
     Route::resource('/posts',PostController::class);

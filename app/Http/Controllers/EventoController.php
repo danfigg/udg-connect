@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventoRequest;
+use App\Http\Resources\EventoResource;
 use App\Mail\EventRegistered;
 use App\Models\Comunidad;
 use App\Models\Evento;
@@ -120,5 +121,10 @@ class EventoController extends Controller
         }
         $evento->participantes()->detach(Auth::id());
         return redirect()->route('eventos.index');
+    }
+
+    public function api_index(Comunidad $comunidad)
+    {
+        return EventoResource::collection($comunidad->eventos);
     }
 }
