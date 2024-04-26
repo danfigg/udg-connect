@@ -25,13 +25,21 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::resource('/posts',PostController::class);
     Route::resource('/comentarios',ComentarioController::class);
     Route::resource('/eventos',EventoController::class);
-    Route::get('/posts/comentarios',[PostController::class,'view_comentarios'])->name('posts.comentarios');
+
     Route::post('/comunidades/{comunidad}/follower',[ComunidadController::class,'add_follower'])->name('comunidad.follower');
     Route::put('/post/{post}/aceptar',[PostController::class, 'aceptar'])->name('post.aceptar');
     Route::put('/post/{post}/rechazar',[PostController::class, 'denegar'])->name('post.rechazar');
     Route::put('/post/{post}/like',[PostController::class, 'like'])->name('post.like');
     Route::put('/post/{post}/dislike',[PostController::class, 'dislike'])->name('post.dislike');
+
     Route::get('/posts/{post}/comentarios',[PostController::class,'comentarios'])->name('posts.comentarios');
+    Route::delete('/comentarios/{comentario}',[ComentarioController::class,'soft_delete'])->name('comentarios.soft_delete');
+    Route::put('/comentarios/{comentario}',[ComentarioController::class,'update'])->name('comentarios.update');
+    Route::get('/comentarios/{comentario}/edit',[ComentarioController::class,'edit'])->name('comentarios.edit');
+    Route::post('/comentarios',[ComentarioController::class,'store'])->name('comentarios.store');
+    Route::delete('/comentarios/{comentario}/force_delete',[ComentarioController::class,'destroy'])->name('comentarios.force_delete');
+    Route::put('/comentarios/{comentario}/restore',[ComentarioController::class,'restore'])->name('comentarios.restore');
+
     Route::put('/evento/{evento}/aceptar',[EventoController::class, 'aceptar'])->name('evento.aceptar');
     Route::put('/evento/{evento}/rechazar',[EventoController::class, 'rechazar'])->name('evento.rechazar'); 
     Route::get('/comunidad/{comunidad}/add_career',[ComunidadController::class,'add_career_form'])->name('comunidad.add_careers_form');
