@@ -1,18 +1,25 @@
 <x-app-layout>
-    <div class="flex flex-col w-9/12 items-center mt-5 ml-5">
+    <div class="flex flex-col items-center mt-5 ml-5">
             <header class="self-start">
                 <a class="text-lg text-white" href="{{route('comunidades.show',$post->comunidad_id)}}">← Regresar a comunidad {{$post->comunidad->name}}</a>
             </header>
             <x-post-show-card :post="$post" :admin="$post->comunidad->user"/>
-            <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
-        <footer class="flex justify-between items-center mb-2">
-            <div class="flex items-center">
-                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img class="mr-2 w-6 h-6 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Michael Gough">Michael Gough</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate="" datetime="2022-02-08" title="February 8th, 2022">Feb. 8, 2022</time></p>
-            </div>
-            <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"></path>
-                </svg>
+            <form action="{{route('comentarios.store')}}" method="post" class="mt-4 flex w-full min-w-[290px] max-w-[590px] gap-2">
+                @csrf
+                <input type="text" class="flex-1" name="cuerpo" id="cuerpo" placeholder="Comentario" value="{{old('cuerpo')??''}}">
+                <input type="hidden" name="post_id" value="{{$post->id}}">
+                <x-button class="mt-2">Comentar</x-button>
+            </form>
+            @error('cuerpo')
+                <p class="text-red-500">{{$message}}</p>
+            @enderror
+            <main class="mt-4 w-9/12 ">
+                <h1 class="text-2xl font-semibold text-white text-start">Comentarios</h1>
+                <div class="flex flex-col gap-3 items-center">
+                    @foreach ($post->comentarios()->withTrashed()->get() as $comentario)
+                        <x-comentario-card :comentario="$comentario" :admin="$post->comunidad->user"/>
+                    @endforeach
+                </div>
+            </main>
     </div>
 </x-app-layout>

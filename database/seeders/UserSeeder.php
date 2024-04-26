@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
         'name'=>'Admin',
         'email'=>'admin@gmail.com',
         'password'=>password_hash('1234',PASSWORD_BCRYPT),
+        'email_verified_at'=>now(),
      ]);
 
     //  DB::table('users')->insert([

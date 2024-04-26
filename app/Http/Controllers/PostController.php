@@ -120,7 +120,7 @@ class PostController extends Controller
             DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
         }
         DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'positivo']);
-        return redirect()->route('comunidades.show',$post->comunidad_id);
+        return redirect()->back();
     }
 
     public function dislike(Post $post){
@@ -132,7 +132,7 @@ class PostController extends Controller
             DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
         }
         DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'negativo']);
-        return redirect()->route('comunidades.show',$post->comunidad_id);
+        return redirect()->back();
     }
 
     public function denegar(Post $post){

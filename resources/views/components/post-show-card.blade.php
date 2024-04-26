@@ -19,7 +19,7 @@
          <a href="{{route('comunidades.show',$post->comunidad)}}" class="dark:text-gray-400 hover:underline text-sm">comunidad/{{$post->comunidad->nombre}}</a>
          <div class="flex flex-col  justify-between">
             <h2 class="text-lg font-semibold dark:text-white text-gray-900 -mt-1">{{$post->user->name}}</h2>
-            <small class="text-sm ">{{$post->created_at->format('F j, Y, g:i a')}}</small>
+            <small class="text-sm ">{{$post->created_at->diffForHumans()}}</small>
          </div>  
         <small class="text-sm">Semestre: {{$post->semestre}}</small>
          <div class="flex gap-2">
