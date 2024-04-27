@@ -36,9 +36,11 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::delete('/comentarios/{comentario}',[ComentarioController::class,'soft_delete'])->name('comentarios.soft_delete');
     Route::put('/comentarios/{comentario}',[ComentarioController::class,'update'])->name('comentarios.update');
     Route::get('/comentarios/{comentario}/edit',[ComentarioController::class,'edit'])->name('comentarios.edit');
-    Route::post('/comentarios',[ComentarioController::class,'store'])->name('comentarios.store');
+    Route::post('post/{post}/comentarios',[ComentarioController::class,'store'])->name('comentarios.store');
     Route::delete('/comentarios/{comentario}/force_delete',[ComentarioController::class,'destroy'])->name('comentarios.force_delete');
     Route::put('/comentarios/{comentario}/restore',[ComentarioController::class,'restore'])->name('comentarios.restore');
+    Route::put('/comentarios/{comentario}/like',[ComentarioController::class,'like'])->name('comentarios.like');
+    Route::put('/comentarios/{comentario}/dislike',[ComentarioController::class,'dislike'])->name('comentarios.dislike');
 
     Route::put('/evento/{evento}/aceptar',[EventoController::class, 'aceptar'])->name('evento.aceptar');
     Route::put('/evento/{evento}/rechazar',[EventoController::class, 'rechazar'])->name('evento.rechazar'); 
