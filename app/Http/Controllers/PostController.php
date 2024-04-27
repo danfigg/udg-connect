@@ -6,6 +6,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Comunidad;
 use App\Models\Etiqueta;
 use App\Models\Post;
+use App\Models\Voto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -112,26 +113,34 @@ class PostController extends Controller
     }
 
     public function like(Post $post){
-        $voto = DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->first();
+        $voto = $post->votos()->where('user_id',Auth::id())->first();
         if($voto != null && $voto->estado == 'positivo'){
             return redirect()->route('comunidades.show',$post->comunidad_id);
         }
         else if($voto != null && $voto->estado == 'negativo'){
-            DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
+            $post->votos()->where('user_id',Auth::id())->delete();
         }
-        DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'positivo']);
+        $vote = new Voto([
+            'user_id' => Auth::id(),
+            'estado' => 'positivo'
+        ]);
+        $post->votos()->save($vote);
         return redirect()->back();
     }
 
     public function dislike(Post $post){
-        $voto = DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->first();
+        $voto = $post->votos()->where('user_id',Auth::id())->first();
         if($voto != null && $voto->estado == 'negativo'){
             return redirect()->route('comunidades.show',$post->comunidad_id);
         }
         else if($voto != null && $voto->estado == 'positivo'){
-            DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
+            $post->votos()->where('user_id',Auth::id())->delete();
         }
-        DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'negativo']);
+        $vote = new Voto([
+            'user_id' => Auth::id(),
+            'estado' => 'negativo'
+        ]);
+        $post->votos()->save($vote);
         return redirect()->back();
     }
 

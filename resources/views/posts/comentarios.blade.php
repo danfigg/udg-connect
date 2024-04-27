@@ -4,10 +4,9 @@
                 <a class="text-lg text-white" href="{{route('comunidades.show',$post->comunidad_id)}}">← Regresar a comunidad {{$post->comunidad->name}}</a>
             </header>
             <x-post-show-card :post="$post" :admin="$post->comunidad->user"/>
-            <form action="{{route('comentarios.store')}}" method="post" class="mt-4 flex w-full min-w-[290px] max-w-[590px] gap-2">
+            <form action="{{route('comentarios.store',$post)}}" method="post" class="mt-4 flex w-full min-w-[290px] max-w-[590px] gap-2">
                 @csrf
                 <input type="text" class="flex-1" name="cuerpo" id="cuerpo" placeholder="Comentario" value="{{old('cuerpo')??''}}">
-                <input type="hidden" name="post_id" value="{{$post->id}}">
                 <x-button class="mt-2">Comentar</x-button>
             </form>
             @error('cuerpo')

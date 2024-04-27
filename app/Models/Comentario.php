@@ -22,8 +22,8 @@ class Comentario extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function post(){
-        return $this->belongsTo(Post::class);
+    public function comentable(){
+        return $this->morphTo();
     }
 
     public function comentario(){
@@ -31,6 +31,14 @@ class Comentario extends Model
     }
 
     public function comentarios(){
-        return $this->hasMany(Comentario::class);
+        return $this->morphMany(Comentario::class,'comentable');
+    }
+
+    public function votos(){
+        return $this->morphMany(Voto::class,'votable');
+    }
+
+    public function sum_votos(){
+        return $this->votos()->where('estado','positivo')->count() - $this->votos()->where('estado','negativo')->count();
     }
 }

@@ -1,10 +1,10 @@
 @php
-   $isLike = Auth::user()->votos()->where('post_id',$post->id)->where('estado','positivo')->first();
-   $isDislike = Auth::user()->votos()->where('post_id',$post->id)->where('estado','negativo')->first();
-   $textIfLike = $isLike ? 'text-red-800' : 'text-gray-300';
-   $textIfDislike = $isLike == null && $isDislike  ? 'fill-red-700' : 'fill-gray-300'; 
-   $isDislikeDisabled = $isLike == null && $isDislike ? 'disabled' : '';
-   $isLikeDisabled = $isLike ? 'disabled' : '';
+   $vote = Auth::user()->votos()->where('votable_id',$post->id)->first();
+   $type = $vote ? ($vote->estado=='positivo' ? 'like' : 'dislike') : 'none';
+   $textIfLike = $type == 'like' ? 'text-red-800' : 'text-gray-300';
+   $textIfDislike = $type == 'dislike' ? 'fill-red-700' : 'fill-gray-300'; 
+   $isDislikeDisabled = $type=='dislike' ? 'disabled' : '';
+   $isLikeDisabled = $type == 'like' ? 'disabled' : '';
 @endphp
 <!-- component -->
 <!-- post card -->
