@@ -15,7 +15,6 @@ class Comunidad extends Model
         'nombre',
         'descripcion',
         'reglas',
-        'banner',
         'estado_comunidad',
         'user_id',
         'centro_id',
@@ -44,5 +43,9 @@ class Comunidad extends Model
 
     public function eventos(){
         return $this->hasMany(Evento::class);
+    }
+
+    public function banner(){
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');   
             $table->string('descripcion');   
-            $table->string('banner')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('comunidad_id')->constrained('comunidades');
             $table->enum('estado_moderacion',['aprobado','en revision','rechazado'])->default('en revision');

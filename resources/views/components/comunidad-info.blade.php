@@ -39,7 +39,9 @@
             </div>
     </div>
     @if($comunidad->banner)
-        <img class="w-7/12" src="{{ asset('storage/'.$comunidad->banner) }}" alt="Banner de la comunidad {{$comunidad->nombre}}">
+        <div class="w-7/12 dark:bg-[#3d4551] p-2">
+            <img class="w-auto h-[150px] m-auto" src="{{ asset('storage/'.$comunidad->banner->ubicacion) }}" alt="Banner de la comunidad {{$comunidad->nombre}}">
+        </div>
     @else
         <div class="{{$banner_color}} w-7/12">
         </div>

@@ -32,7 +32,7 @@ class ComunidadRequest extends FormRequest
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'reglas' => 'required|string',
-            'banner' => 'string|nullable',
+            'banner' => 'image',
             'centro_id' => 'required|integer|exists:centros,id',
             'estado_comunidad' => 'required|in:activo,inactivo',
         ];

@@ -12,7 +12,7 @@
 @endphp
     <div class="my-2">
         @if($comunidad->banner)
-            <img src="{{ asset($comunidad->banner) }}" alt="{{$comunidad->nombre}} banner" class="w-full h-[35px] dark:text-white">
+            <img src="{{ asset('storage/' . $comunidad->banner->ubicacion) }}" alt="{{$comunidad->nombre}} banner" class="w-auto m-auto h-[150px] dark:text-white">
         @else
             <div class="{{$banner_color}} w-full h-[35px]">
             </div>

@@ -24,6 +24,10 @@ class Evento extends Model
         'duracion_horas',
     ];
 
+    public function imagen(){
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
     public function participantes(){
         return  $this->belongsToMany(User::class,'user_eventos');
     }

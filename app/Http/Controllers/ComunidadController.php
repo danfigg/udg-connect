@@ -6,10 +6,9 @@ use App\Models\Comunidad;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ComunidadRequest;
-use App\Models\Carrera;
 use App\Models\Centro;
 use App\Models\CentroCarrera;
-use App\Models\ComunidadCarrera;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +40,16 @@ class ComunidadController extends Controller
     public function store(ComunidadRequest $request): RedirectResponse
     {
         $request->merge(['user_id' => Auth::id()]);
-        Comunidad::create($request->all());
+        $comunidad = Comunidad::create($request->all());
+        if($request->file('banner')->isValid()){
+            $ruta = $request->banner->store('','public');
+
+            $archivo = new Image();
+            $archivo->ubicacion = $ruta;
+            $archivo->nombre_original = $request->banner->getClientOriginalName();
+            $archivo->mime = $request->banner->getClientMimeType();
+            $comunidad->banner()->save($archivo);
+        }
         return redirect()->route('comunidades.index');
     }
 
