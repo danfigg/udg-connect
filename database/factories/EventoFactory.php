@@ -18,7 +18,7 @@ class EventoFactory extends Factory
     {
         return [
             "nombre"=>$this->faker->sentence(3),
-            "descripcion"=>$this->faker->paragraph(3),
+            "descripcion"=>$this->faker->paragraph(2),
             "fecha_hora_evento"=>$this->faker->dateTimeBetween("-1 month", "+1 month"),
             "user_id"=>$this->faker->numberBetween(1, 11),
             "comunidad_id"=>$this->faker->numberBetween(1, 30),
