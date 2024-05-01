@@ -56,7 +56,8 @@ class PostController extends Controller
             }
         }
 
-        foreach($request->file('attachments') as $file){
+    if($request->hasFile('attachments')){
+            foreach($request->file('attachments') as $file){
             $ruta = $file->store('','public');
 
             $archivo = new File();
@@ -65,6 +66,7 @@ class PostController extends Controller
             $archivo->mime = $file->getClientMimeType();
             $post->attachments()->save($archivo);
         }
+    }
 
         return redirect()->route('comunidades.show',$post->comunidad_id);
     }

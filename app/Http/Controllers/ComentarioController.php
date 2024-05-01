@@ -42,7 +42,7 @@ class ComentarioController extends Controller
             'cuerpo'=>'min:3|max:255|required'
         ]);
         $comentario->update($request->all());
-        return redirect()->route('posts.comentarios',$comentario->comentable);
+        return redirect()->route('posts.comentarios',$comentario->comentable_id);
     }
 
     /**

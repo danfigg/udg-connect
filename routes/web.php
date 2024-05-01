@@ -23,7 +23,6 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::resource('/comunidades',ComunidadController::class)->parameters(['comunidades' => 'comunidad',]); 
     Route::resource('/carreras',CarreraController::class);
     Route::resource('/posts',PostController::class);
-    Route::resource('/comentarios',ComentarioController::class);
     Route::resource('/eventos',EventoController::class);
 
     Route::post('/comunidades/{comunidad}/follower',[ComunidadController::class,'add_follower'])->name('comunidad.follower');
