@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Comunidad;
 use App\Models\Etiqueta;
+use App\Models\File;
 use App\Models\Post;
 use App\Models\Voto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -54,7 +56,22 @@ class PostController extends Controller
             }
         }
 
+        foreach($request->file('attachments') as $file){
+            $ruta = $file->store('','public');
+
+            $archivo = new File();
+            $archivo->ubicacion = $ruta;
+            $archivo->nombre_original = $file->getClientOriginalName();
+            $archivo->mime = $file->getClientMimeType();
+            $post->attachments()->save($archivo);
+        }
+
         return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function download($name){
+        $file = File::where('nombre_original',$name)->first();
+        return response()->download(storage_path('app/public/'.$file->ubicacion),$file->nombre_original);
     }
 
     /**
@@ -100,6 +117,9 @@ class PostController extends Controller
     {
         if($post->user->id != Auth::id()){
             return redirect()->route('comunidades.show',$post->comunidad_id);
+        }
+        foreach($post->attachments as $attachment){
+            Storage::delete('public/'.$attachment->ubicacion);
         }
         $post->delete();
         return redirect()->route('comunidades.show',$post->comunidad_id);

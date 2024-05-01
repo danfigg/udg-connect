@@ -43,4 +43,8 @@ class Post extends Model
     public function comunidad(){
         return $this->belongsTo(Comunidad::class);
     }
+
+    public function attachments(){
+        return $this->morphMany(File::class,'fileable');
+    }
 }

@@ -50,6 +50,7 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::post('/comunidad/evento/{evento}/registrar',[EventoController::class,'registrar'])->name('evento.registrar');
     Route::get('/etiqueta/{etiqueta}/posts',[PostController::class,'etiqueta'])->name('etiqueta.posts');
     Route::delete('/comunidad/evento/{evento}/desregistrar',[EventoController::class,'desregistrar'])->name('evento.desregistrar');
+    Route::get('/posts/download/{name}',[PostController::class,'download'])->name('posts.download');
 });
 
 Route::middleware([

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class ComunidadController extends Controller
 {
@@ -88,6 +89,7 @@ class ComunidadController extends Controller
     public function destroy(Comunidad $comunidad): RedirectResponse
     {
         Gate::authorize('delete', $comunidad);
+        Storage::delete('public/'.$comunidad->banner->ubicacion);
         $comunidad->delete();
         return redirect()->route('comunidades.index');
     }

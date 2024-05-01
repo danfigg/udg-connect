@@ -31,6 +31,11 @@
         <p class="mt-3  text-sm">
             {{$post->contenido}}
          </p>
+         <div>
+            @foreach($post->attachments as $attachment)
+               <a href="{{route('posts.download',$attachment->nombre_original)}}" class="hover:underline text-blue-600">{{$attachment->nombre_original}}</a>
+            @endforeach
+         </div>
          <div class="mt-4 flex items-center">
             <div class="flex mr-2  text-sm items-center gap-1">
                <div class="hover:text-red-800 {{$textIfLike}} flex items-center">
