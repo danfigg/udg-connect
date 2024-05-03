@@ -60,44 +60,26 @@
                     onclick="Livewire.dispatch('openModal', { component: 'create-event', arguments: {comunidad_id:{{$comunidad->id}}}})">Crear Evento
             </button>
                 @livewire('wire-elements-modal')
+                @php
+                    $usuario_unido = DB::table('comunidad_users')
+                                        ->where('comunidad_id', $comunidad->id)
+                                        ->where('user_id', Auth::id())
+                                        ->exists();
+                @endphp
+            @if(!$usuario_unido)
             <form action="{{ route('comunidad.follower', $comunidad->id) }}" method="post">
                 @csrf
                 <button class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                     Unirse
                 </button>
             </form>
+            @else
+            <form action="{{ route('comunidad.unfollower', $comunidad->id) }}" method="post">
+                @csrf
+                <button class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                    Abandonar
+                </button>
+            </form>
+            @endif
         </div>
     </div>
-    
-    {{--
-    <div class="px-6">
-        <details class="px-4 py-4 border dark:bg-gray-900 dark:text-white border-gray-300 bg-gray-200 rounded-md">
-            <summary class="cursor-pointer">Acerca de</summary>
-            <div class="mt-2">
-                <p class="mb-1"><span class="font-semibold">Descripción:</span> {{ $comunidad->descripcion }}</p>
-                <p class="mb-1"><span class="font-semibold">Reglas:</span><br> {{ $comunidad->reglas }}</p>
-                @can('addCareers',$comunidad)
-                    <a href="{{route('comunidad.add_careers_form',$comunidad)}}" class="text-blue-700 hover:underline">Agregar carreras relacionadas</a>
-                @endcan
-                <ul>
-                    @foreach($comunidad->carreras as $carrera)
-                        <li  class="flex gap-3">
-                            {{ $carrera->carrera->nombre }}
-                            @can('addCareers',$comunidad)
-                                <form action="{{route('comunidad.delete_career',[$comunidad,$carrera])}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 dark:fill-white" viewBox="0 0 448 512">
-                                            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
-                                        </svg>
-                                    </button>
-                                </form>
-                            @endcan
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </details>
-    </div>
---}}

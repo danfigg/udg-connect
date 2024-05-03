@@ -26,6 +26,7 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::resource('/eventos',EventoController::class);
 
     Route::post('/comunidades/{comunidad}/follower',[ComunidadController::class,'add_follower'])->name('comunidad.follower');
+    Route::post('/comunidades/{comunidad}/unfollower',[ComunidadController::class,'remove_follower'])->name('comunidad.unfollower');
     Route::put('/post/{post}/aceptar',[PostController::class, 'aceptar'])->name('post.aceptar');
     Route::put('/post/{post}/rechazar',[PostController::class, 'denegar'])->name('post.rechazar');
     Route::put('/post/{post}/like',[PostController::class, 'like'])->name('post.like');

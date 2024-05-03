@@ -105,6 +105,28 @@ class ComunidadController extends Controller
         }
     }
 
+    public function remove_follower(Comunidad $comunidad){
+        // Buscar la relación del usuario con la comunidad
+        $user = DB::table('comunidad_users')
+                    ->where('comunidad_id', $comunidad->id)
+                    ->where('user_id', Auth::id())
+                    ->first();
+    
+        // Verificar si el usuario sigue a la comunidad
+        if($user){
+            // Eliminar la relación
+            DB::table('comunidad_users')
+                ->where('comunidad_id', $comunidad->id)
+                ->where('user_id', Auth::id())
+                ->delete();
+            
+            return redirect()->route('comunidades.show', $comunidad);
+        } else {
+            // Si el usuario no sigue a la comunidad, redirigir de vuelta a la página de la comunidad
+            return redirect()->route('comunidades.show', $comunidad);
+        }
+    }
+
     public function add_career_form(Comunidad $comunidad){
         Gate::authorize('addCareers', $comunidad);
         $carreras = CentroCarrera::where('centro_id', $comunidad->centro_id)->get();

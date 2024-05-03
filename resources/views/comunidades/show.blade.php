@@ -1,3 +1,5 @@
+
+
 <x-app-layout>
 
    <x-comunidad-banner :comunidad="$comunidad"/>
