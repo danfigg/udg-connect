@@ -1,16 +1,15 @@
 
 
 <x-app-layout>
-
    <x-comunidad-banner :comunidad="$comunidad"/>
 
-   <div class="py-8 px-6 flex justify-center">
+   <div class="py-8 px-6 flex justify-center flex-wrap gap-3">
       <button id="acerca" class="mx-6 px-4 py-2 bg-gray-800 text-white font-semibold rounded-md">Acerca de</button>
       <button id="conversacion" class="mx-6 px-4 py-2 bg-white text-blue-800 underline font-semibold rounded-md">Conversación</button>
       <button id="eventos" class="mx-6 px-4 py-2 bg-gray-800 text-white font-semibold rounded-md">Eventos</button>
    </div>
 
-   <div id="show_conversacion">
+   <div class="flex-col" id="show_conversacion">
         @foreach ($comunidad->posts as $post)
             @if($post->estado_moderacion == 'aprobado')
                 <x-post-show-card :post="$post" :admin="$comunidad->user"/>
@@ -49,9 +48,8 @@
          </div>
       </div>
  </div>
-   </div>
 
-   <div id="show_eventos" style="display: none">
+   <div id="show_eventos" class="flex flex-col items-center w-full gap-3" style="display: none">
       @foreach ($comunidad->eventos as $evento)
          <x-event-card :evento="$evento" :admin='$evento->comunidad->user'></x-event-card>
       @endforeach
@@ -85,21 +83,21 @@
       // Agregar un evento de clic al botón
       boton_conversacion.addEventListener('click', function() {
          // Cambiar el estilo del div para mostrarlo
-         div_conversacion.style.display = 'block';
+         div_conversacion.style.display = 'flex';
          div_acerca.style.display = 'none';
          div_eventos.style.display = 'none';
       });
 
       boton_acerca.addEventListener('click', function() {
          // Cambiar el estilo del div para mostrarlo
-         div_acerca.style.display = 'block';
+         div_acerca.style.display = 'flex';
          div_conversacion.style.display = 'none';
          div_eventos.style.display = 'none';
       });
 
       boton_eventos.addEventListener('click', function() {
          // Cambiar el estilo del div para mostrarlo
-         div_eventos.style.display = 'block';
+         div_eventos.style.display = 'flex';
          div_acerca.style.display = 'none';
          div_conversacion.style.display = 'none';
       });

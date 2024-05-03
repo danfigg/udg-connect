@@ -45,7 +45,7 @@ class EventoController extends Controller
             $request->merge(["estado_moderacion" => "en revision"]);
         }
         $request->merge(["user_id" => Auth::Id()]);
-        Evento::create($request->all());
+        Evento::create($request->except('banner'));
         return redirect()->route('comunidades.show',$comunidad);
     }
 
