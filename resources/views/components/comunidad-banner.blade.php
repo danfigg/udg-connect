@@ -69,9 +69,10 @@
         </div>
     </div>
     
+    {{--
     <div class="px-6">
         <details class="px-4 py-4 border dark:bg-gray-900 dark:text-white border-gray-300 bg-gray-200 rounded-md">
-            <summary class="cursor-pointer">Detalles</summary>
+            <summary class="cursor-pointer">Acerca de</summary>
             <div class="mt-2">
                 <p class="mb-1"><span class="font-semibold">Descripción:</span> {{ $comunidad->descripcion }}</p>
                 <p class="mb-1"><span class="font-semibold">Reglas:</span><br> {{ $comunidad->reglas }}</p>
@@ -99,3 +100,4 @@
             </div>
         </details>
     </div>
+--}}

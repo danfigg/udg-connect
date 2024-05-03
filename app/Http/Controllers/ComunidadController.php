@@ -59,7 +59,7 @@ class ComunidadController extends Controller
      */
     public function show(Comunidad $comunidad): View
     {
-        $comunidad::with(['carreras','posts.etiquetas'])->get();
+        $comunidad::with(['carreras','posts.etiquetas', 'eventos'])->get();
         return view('comunidades.show', compact('comunidad'));
     }
 
