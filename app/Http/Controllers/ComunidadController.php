@@ -42,7 +42,7 @@ class ComunidadController extends Controller
     {
         $request->merge(['user_id' => Auth::id()]);
         $comunidad = Comunidad::create($request->all());
-        if($request->file('banner')->isValid()){
+        if($request->hasFile('banner') && $request->file('banner')->isValid()){
             $ruta = $request->banner->store('','public');
 
             $archivo = new Image();
@@ -89,7 +89,9 @@ class ComunidadController extends Controller
     public function destroy(Comunidad $comunidad): RedirectResponse
     {
         Gate::authorize('delete', $comunidad);
-        Storage::delete('public/'.$comunidad->banner->ubicacion);
+        if($comunidad->banner != null){
+            Storage::delete('public/'.$comunidad->banner->ubicacion);
+        }
         $comunidad->delete();
         return redirect()->route('comunidades.index');
     }
@@ -106,15 +108,11 @@ class ComunidadController extends Controller
     }
 
     public function remove_follower(Comunidad $comunidad){
-        // Buscar la relación del usuario con la comunidad
         $user = DB::table('comunidad_users')
                     ->where('comunidad_id', $comunidad->id)
                     ->where('user_id', Auth::id())
                     ->first();
-    
-        // Verificar si el usuario sigue a la comunidad
-        if($user){
-            // Eliminar la relación
+            if($user){
             DB::table('comunidad_users')
                 ->where('comunidad_id', $comunidad->id)
                 ->where('user_id', Auth::id())
@@ -122,7 +120,6 @@ class ComunidadController extends Controller
             
             return redirect()->route('comunidades.show', $comunidad);
         } else {
-            // Si el usuario no sigue a la comunidad, redirigir de vuelta a la página de la comunidad
             return redirect()->route('comunidades.show', $comunidad);
         }
     }
