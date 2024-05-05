@@ -3,10 +3,10 @@
 <x-app-layout>
    <x-comunidad-banner :comunidad="$comunidad"/>
 
-   <div class="py-8 px-6 flex justify-center flex-wrap gap-3">
-      <button id="acerca" class="mx-6 px-4 py-2 bg-gray-800 text-white font-semibold rounded-md">Acerca de</button>
-      <button id="conversacion" class="mx-6 px-4 py-2 bg-white text-blue-800 underline font-semibold rounded-md">Conversación</button>
-      <button id="eventos" class="mx-6 px-4 py-2 bg-gray-800 text-white font-semibold rounded-md">Eventos</button>
+   <div id="button-container" class="py-8 px-6 flex justify-center flex-wrap gap-3">
+      <button id="acerca" class="mx-6 px-4 py-2 bg-gray-600 text-white font-semibold rounded-3xl">Acerca de</button>
+      <button id="conversacion" class="mx-6 px-4 py-2 bg-white text-blue-800 underline font-semibold rounded-3xl">Conversación</button>
+      <button id="eventos" class="mx-6 px-4 py-2 bg-gray-600 text-white font-semibold rounded-3xl">Eventos</button>
    </div>
 
    <div class="flex-col" id="show_conversacion">
@@ -102,13 +102,17 @@
          div_conversacion.style.display = 'none';
       });
 
-      document.querySelectorAll('button').forEach(button => {
+    const buttonContainer = document.getElementById('button-container');
+    const buttons = buttonContainer.querySelectorAll('button');
+
+    buttons.forEach(button => {
         button.addEventListener('click', () => {
-            document.querySelectorAll('button').forEach(btn => {
+            buttons.forEach(btn => {
                 btn.classList.remove('bg-white', 'text-blue-800', 'underline');
-                btn.classList.add('bg-gray-800', 'text-white');
+                btn.classList.add('bg-gray-600', 'text-white');
             });
-            button.classList.remove('bg-gray-800', 'text-white');
+
+            button.classList.remove('bg-gray-600', 'text-white');
             button.classList.add('bg-white', 'text-blue-800', 'underline');
         });
     });
