@@ -89,6 +89,8 @@ class ComunidadController extends Controller
     public function destroy(Comunidad $comunidad): RedirectResponse
     {
         Gate::authorize('delete', $comunidad);
+        $comunidad->usuarios()->detach();
+        $comunidad->eventos()->delete();
         if($comunidad->banner != null){
             Storage::delete('public/'.$comunidad->banner->ubicacion);
         }

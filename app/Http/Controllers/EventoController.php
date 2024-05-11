@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EventoController extends Controller
 {
@@ -92,8 +93,13 @@ class EventoController extends Controller
     public function destroy(Evento $evento)
     {
         Gate::authorize('delete', $evento);
+        $comunidad = $evento->comunidad;
+        if($evento->imagen){
+            Storage::disk('public')->delete($evento->imagen->ubicacion);
+            $evento->imagen->delete();
+        }
         $evento->delete();
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$comunidad);
     }
 
     public function aceptar(Evento $evento)

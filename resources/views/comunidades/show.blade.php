@@ -10,6 +10,9 @@
    </div>
 
    <div class="flex-col" id="show_conversacion">
+    @if ($comunidad->posts->isEmpty())
+        <p class="dark:text-white text-black text-center">No existen conversaciones</p>
+    @else
         @foreach ($comunidad->posts as $post)
             @if($post->estado_moderacion == 'aprobado')
                 <x-post-show-card :post="$post" :admin="$comunidad->user"/>
@@ -17,10 +20,11 @@
                 <x-post-show-card :post="$post" :admin="$comunidad->user" />
             @endif
         @endforeach
-   </div>
+    @endif
+</div>
 
-   <div id="show_acerca" class="py-6 px-20" style="display: none">    
-      <div class="px-4 py-4 border dark:bg-gray-900 dark:text-white border-gray-300 bg-gray-200 rounded-md">
+   <div id="show_acerca" class="py-6 px-20 " style="display: none">    
+      <div class="px-4 py-4 border w-11/12 mx-auto dark:bg-gray-900 dark:text-white border-gray-300 bg-gray-200 rounded-md">
          <div class="mt-2">
              <p class="mb-1"><span class="font-semibold">Descripción:</span><br> {{ $comunidad->descripcion }}</p>
              <p class="mb-1"><span class="font-semibold">Reglas:</span><br> {{ $comunidad->reglas }}</p>
@@ -45,15 +49,19 @@
                      </li>
                  @endforeach
              </ul>
-         </div>
-      </div>
- </div>
+            </div>
+        </div>
+    </div>
 
-   <div id="show_eventos" class="flex flex-col items-center w-full gap-3" style="display: none">
-      @foreach ($comunidad->eventos as $evento)
-         <x-event-card :evento="$evento" :admin='$evento->comunidad->user'></x-event-card>
-      @endforeach
-   </div>
+    <div id="show_eventos" class="flex flex-col items-center w-full gap-3" style="display: none">
+        @if ($comunidad->eventos->isEmpty())
+            <p class="dark:text-white text-black text-center">No existen eventos</p>
+        @else
+            @foreach ($comunidad->eventos as $evento)
+                <x-event-card :evento="$evento" :admin='$evento->comunidad->user'></x-event-card>
+            @endforeach
+        @endif
+    </div>
 
     <script>
       const shareLinks = document.querySelectorAll('.share');
