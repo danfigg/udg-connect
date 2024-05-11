@@ -24,7 +24,7 @@ class EventoRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'fecha_hora_evento' => 'required|date',
+            'fecha_hora_evento' => 'required',
             'duracion_horas'=>'required|min:1|max:24'
         ];
     }

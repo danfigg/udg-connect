@@ -17,7 +17,6 @@ class EventoResource extends JsonResource
         return [
               'nombre'=>$this->nombre,
               'descripcion'=>$this->descripcion,
-              'banner'=>$this->banner,
               'user'=>$this->user,
               'comunidad'=>$this->comunidad,
               'estado_moderacion'=>$this->estado_moderacion,

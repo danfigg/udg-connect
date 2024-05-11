@@ -1,5 +1,5 @@
 <div class="py-8 px-8 bg-gray-100 dark:bg-gray-900">
-    <form action="{{route('eventos.store')}}" method="post" class="dark:text-white">
+    <form action="{{route('eventos.store')}}" method="POST" class="dark:text-white" enctype="multipart/form-data">
             @csrf 
             <div class="flex flex-col">
                 <input type="hidden" name="comunidad_id" value="{{$comunidad_id}}">

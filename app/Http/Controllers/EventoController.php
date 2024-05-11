@@ -7,6 +7,7 @@ use App\Http\Resources\EventoResource;
 use App\Mail\EventRegistered;
 use App\Models\Comunidad;
 use App\Models\Evento;
+use App\Models\Image;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,16 @@ class EventoController extends Controller
             $request->merge(["estado_moderacion" => "en revision"]);
         }
         $request->merge(["user_id" => Auth::Id()]);
-        Evento::create($request->except('banner'));
+        $evento = Evento::create($request->except('banner'));
+        if($request->hasFile('banner') && $request->file('banner')->isValid()){
+            $ruta = $request->banner->store('','public');
+
+            $archivo = new Image();
+            $archivo->ubicacion = $ruta;
+            $archivo->nombre_original = $request->banner->getClientOriginalName();
+            $archivo->mime = $request->banner->getClientMimeType();
+            $evento->imagen()->save($archivo);
+        }
         return redirect()->route('comunidades.show',$comunidad);
     }
 

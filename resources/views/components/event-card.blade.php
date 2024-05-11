@@ -12,8 +12,8 @@
                 <path d="M189 74.0676V0.638514C189 0.286054 188.714 0 188.361 0H137.38C137.028 0 136.742 0.286054 136.742 0.638514V59.701C136.742 98.4913 98.4914 136.742 59.701 136.742H0.638514C0.286054 136.742 0 137.028 0 137.38V188.361C0 188.714 0.286054 189 0.638514 189H74.0676C137.543 189 189 137.543 189 74.0676Z" fill="#530031" data-path="0.0.3.1.0.0.0.1.0.0"></path>
             </svg>
         </div>
-        @if($evento->banner!=null)
-        <img class="absolute top-0 left-0 w-full h-full object-cover rounded-t-2xl" src="{{$evento->banner}}" alt="" data-config-id="auto-img-4-2" data-path="0.0.3.1.0.0.0.2">
+        @if($evento->imagen!=null)
+        <img class="absolute top-0 left-0 w-full h-full object-cover rounded-t-2xl" src="{{asset('storage/' . $evento->imagen->ubicacion)}}" alt="" data-config-id="auto-img-4-2" data-path="0.0.3.1.0.0.0.2">
         @else
             <div class="absolute top-0 left-0 w-full h-full object-cover rounded-t-2xl bg-[#530031]"></div>
         @endif
@@ -63,14 +63,14 @@
                         </form>
                     @endif
         </div>
-        @if($admin->id == Auth::id() && $post->estado_moderacion == 'en revision')
+        @if($admin->id == Auth::id() && $evento->estado_moderacion == 'en revision')
         <div class="mt-4 flex gap-1">
-            <form action="{{route('post.aceptar',$post)}}" method="POST">
+            <form action="{{route('evento.aceptar',$evento)}}" method="POST">
                @csrf
                @method('PUT')
                <x-button>Aceptar</x-button>
             </form>
-            <form action="{{route('post.rechazar',$post)}}" method="POST">
+            <form action="{{route('evento.rechazar',$evento)}}" method="POST">
                @csrf
                @method('PUT')
                <x-button>Rechazar</x-button>
