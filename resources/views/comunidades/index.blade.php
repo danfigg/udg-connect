@@ -19,7 +19,7 @@
                     @forelse ($comunidades as $comunidad)
                         <x-comunidad-info :comunidad='$comunidad' />
                     @empty
-                        <p>Oops, no hay comunidades a las que puedas unirte.</p>
+                        <p class="dark:text-white">Oops, no hay comunidades a las que puedas unirte.</p>
                     @endforelse
                 </ul>    
             </div>

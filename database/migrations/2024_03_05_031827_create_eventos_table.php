@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');   
             $table->string('descripcion');   
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('comunidad_id')->constrained('comunidades');
+            $table->foreignId('comunidad_id')->constrained('comunidades')->onDelete('cascade');
             $table->enum('estado_moderacion',['aprobado','en revision','rechazado'])->default('en revision');
             $table->dateTime('fecha_hora_evento');   
             $table->unsignedInteger('duracion_horas')->default(1);
