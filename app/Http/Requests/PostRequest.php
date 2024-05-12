@@ -25,6 +25,7 @@ class PostRequest extends FormRequest
             "titulo"=>"required|min:5|max:255",
             "contenido"=>"required|min:5",
             "semestre"=>"required|string",
+            "tags"=>"string|min:3|max:50|starts_with:#",
         ];
     }
 }

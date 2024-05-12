@@ -1,7 +1,8 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-900 pb-5 shadow-xl sm:rounded-lg">
+            <div class="bg-gray-200 dark:bg-gray-800 pt-5 pb-5 shadow-xl sm:rounded-xl">
+                
                 @if(count($comunidades) > 0)
                     @foreach($comunidades as $comunidad)
                         @foreach($comunidad->posts as $post)

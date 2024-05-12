@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->text('reglas');
-            $table->string('banner')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('centro_id')->constrained();
             $table->enum('estado_comunidad', ['activo', 'inactivo']);

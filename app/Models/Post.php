@@ -21,11 +21,11 @@ class Post extends Model
 
     // protected $guarded = [] list of properties protected mass assigment
     public function comentarios(){
-        return $this->hasMany(Comentario::class);
+        return $this->morphMany(Comentario::class,'comentable');
     }
 
     public function votos(){
-        return $this->hasMany(Voto::class);
+        return $this->morphMany(Voto::class,'votable');
     }
 
     public function sum_votos(){
@@ -37,10 +37,14 @@ class Post extends Model
     }
 
     public function etiquetas(){
-        return $this->belongsToMany(Etiqueta::class);
+        return $this->belongsToMany(Etiqueta::class,"post_etiquetas");
     }
 
     public function comunidad(){
         return $this->belongsTo(Comunidad::class);
+    }
+
+    public function attachments(){
+        return $this->morphMany(File::class,'fileable');
     }
 }

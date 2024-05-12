@@ -25,19 +25,23 @@
         <p class="text-sm dark:text-gray-300">Creador: {{$comunidad->user->name}}</p>
         <p class="text-sm dark:text-gray-300">{{ $comunidad->descripcion }}</p>
         <p class="text-sm dark:text-gray-300">Participantes: {{ $comunidad->usuarios()->count() }}</p>
-        @if($comunidad->user_id == Auth::id())
-            <div class="flex gap-3">
+        <div class="flex gap-3">
+            @can('update', $comunidad)
                 <a href="{{ route('comunidades.edit', $comunidad->id) }}"><img src="/edit.svg" alt="Modificar comunidad"></a>
+            @endcan
+            @can('delete', $comunidad)
                 <form method="POST" action="{{ route('comunidades.destroy', $comunidad->id) }}">
                     @csrf
                     @method('DELETE')
                     <button><img src="/delete.svg" alt="Borrar comunidad"></button>
                 </form>
+            @endcan
             </div>
-        @endif
     </div>
     @if($comunidad->banner)
-        <img class="w-7/12" src="{{ asset('storage/'.$comunidad->banner) }}" alt="Banner de la comunidad {{$comunidad->nombre}}">
+        <div class="w-7/12 dark:bg-[#3d4551] p-2">
+            <img class="w-auto h-[150px] m-auto" src="{{ asset('storage/'.$comunidad->banner->ubicacion) }}" alt="Banner de la comunidad {{$comunidad->nombre}}">
+        </div>
     @else
         <div class="{{$banner_color}} w-7/12">
         </div>

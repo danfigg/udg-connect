@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');   
             $table->string('descripcion');   
-            $table->string('banner');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('comunidad_id')->constrained('comunidades');
+            $table->enum('estado_moderacion',['aprobado','en revision','rechazado'])->default('en revision');
             $table->dateTime('fecha_hora_evento');   
+            $table->unsignedInteger('duracion_horas')->default(1);
             $table->timestamps();
         });
     }

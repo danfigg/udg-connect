@@ -1,27 +1,41 @@
 @php
-   $isLike = Auth::user()->votos()->where('post_id',$post->id)->where('estado','positivo')->first();
-   $isDislike = Auth::user()->votos()->where('post_id',$post->id)->where('estado','negativo')->first();
-   $textIfLike = $isLike ? 'text-red-800' : 'text-gray-300';
-   $textIfDislike = $isLike == null && $isDislike  ? 'fill-red-700' : 'fill-gray-300'; 
-   $isDislikeDisabled = $isLike == null && $isDislike ? 'disabled' : '';
-   $isLikeDisabled = $isLike ? 'disabled' : '';
+   $vote = Auth::user()->votos()->where('votable_id',$post->id)->first();
+   $type = $vote ? ($vote->estado=='positivo' ? 'like' : 'dislike') : 'none';
+   $textIfLike = $type == 'like' ? 'text-red-800' : 'text-gray-300';
+   $textIfDislike = $type == 'dislike' ? 'fill-red-700' : 'fill-gray-300'; 
+   $isDislikeDisabled = $type=='dislike' ? 'disabled' : '';
+   $isLikeDisabled = $type == 'like' ? 'disabled' : '';
 @endphp
 <!-- component -->
 <!-- post card -->
 <div id="{{'post-'.$post->id}}" class="flex dark:border dark:border-gray-400 bg-white shadow-lg rounded-lg mx-4 md:mx-auto mt-5 max-w-md md:max-w-2xl dark:bg-gray-900 dark:text-white"><!--horizantil margin is just for display-->
-<div class="flex items-start px-4 py-6">
-   <svg class="dark:fill-white w-12 h-12 rounded-full object-cover mr-4 shadow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+<div class="flex gap-6 items-start px-4 py-6">
+   @if($post->user->profile_photo_path)
+      <img src="{{Storage::url($post->user->profile_photo_path)}}" class="w-12 h-12 rounded-full" alt="¨Profile photo of {{$post->user->name}}">
+   @else
+      <img src="https://ui-avatars.com/api/?name={{$post->user->name}}" class="w-12 h-12 rounded-full" alt="¨Profile photo of {{$post->user->name}}">
+   @endif
    <div>
          <a href="{{route('comunidades.show',$post->comunidad)}}" class="dark:text-gray-400 hover:underline text-sm">comunidad/{{$post->comunidad->nombre}}</a>
          <div class="flex flex-col  justify-between">
             <h2 class="text-lg font-semibold dark:text-white text-gray-900 -mt-1">{{$post->user->name}}</h2>
-            <small class="text-sm ">{{$post->created_at->format('D d M Y H:i:s')}}</small>
-        </div>  
-        <small class="text-sm ">Semestre: {{$post->semestre}}</small>
+            <small class="text-sm ">{{$post->created_at->diffForHumans()}}</small>
+         </div>  
+        <small class="text-sm">Semestre: {{$post->semestre}}</small>
+         <div class="flex gap-2">
+            @foreach($post->etiquetas as $etiqueta)
+               <a href="{{route('etiqueta.posts',$etiqueta)}}" class="hover:underline text-green-300">#{{$etiqueta->nombre}}</a>
+            @endforeach
+         </div>
         <h1 class="text-lg">{{$post->titulo}}</h1>
         <p class="mt-3  text-sm">
             {{$post->contenido}}
          </p>
+         <div>
+            @foreach($post->attachments as $attachment)
+               <a href="{{route('posts.download',$attachment->nombre_original)}}" class="hover:underline text-blue-600">{{$attachment->nombre_original}}</a>
+            @endforeach
+         </div>
          <div class="mt-4 flex items-center">
             <div class="flex mr-2  text-sm items-center gap-1">
                <div class="hover:text-red-800 {{$textIfLike}} flex items-center">
@@ -54,10 +68,12 @@
                    <span>{{$post->comentarios()->count()}}</span>
                </div>
                <div class="flex">
-                    @if($post->user->id==Auth::id())
-                        <a href="{{route('posts.edit',$post)}}" class="flex items-center">
-                           <svg class="dark:fill-white hover:fill-blue-600 h-4" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -960 960 960" width="24"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-                        </a>
+                  @can('update',$post)
+                  <a href="{{route('posts.edit',$post)}}" class="flex items-center">
+                     <svg class="dark:fill-white hover:fill-blue-600 h-4" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -960 960 960" width="24"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+                  </a>
+                  @endcan
+                    @can('delete',$post)
                         <form action="{{route('posts.destroy',$post)}}" method="POST">
                               @csrf
                               @method('DELETE')
@@ -65,7 +81,7 @@
                               <svg class="fill-red-500 w-4 hover:fill-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="24"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                            </button>
                         </form>
-                    @endif
+                    @endcan
                 </div>
             </div>
             <button value="{{route('comunidades.show',$post->comunidad).'#post-'.$post->id}}" class="flex share  text-sm mr-4 hover:text-green-600 dark:active:text-green-400 active:text-green-900">
@@ -75,19 +91,21 @@
                <span>share</span>
             </button>
         </div>
-        @if($admin->id == Auth::id() && $post->estado_moderacion == 'en revision')
-        <div class="mt-4 flex gap-1">
-            <form action="{{route('post.aceptar',$post)}}" method="POST">
-               @csrf
-               @method('PUT')
-               <x-button>Aceptar</x-button>
-            </form>
-            <form action="{{route('post.rechazar',$post)}}" method="POST">
-               @csrf
-               @method('PUT')
-               <x-button>Rechazar</x-button>
-            </form>
-        </div>
+        @if($post->estado_moderacion == 'en revision')
+        @can('canAcceptOrDeny',$post)
+         <div class="mt-4 flex gap-1">
+               <form action="{{route('post.aceptar',$post)}}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <x-button>Aceptar</x-button>
+               </form>
+               <form action="{{route('post.rechazar',$post)}}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <x-button>Rechazar</x-button>
+               </form>
+         </div>
+         @endcan
         @endif
       </div>
    </div>

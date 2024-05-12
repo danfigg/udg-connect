@@ -29,10 +29,10 @@ class ComunidadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|min:3|max:255',
             'descripcion' => 'required|string',
             'reglas' => 'required|string',
-            'banner' => 'string|nullable',
+            'banner' => 'image',
             'centro_id' => 'required|integer|exists:centros,id',
             'estado_comunidad' => 'required|in:activo,inactivo',
         ];

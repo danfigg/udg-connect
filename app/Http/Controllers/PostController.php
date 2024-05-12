@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Comunidad;
+use App\Models\Etiqueta;
+use App\Models\File;
 use App\Models\Post;
+use App\Models\Voto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -18,12 +23,6 @@ class PostController extends Controller
     //     $this->middleware('auth')->only('index','delete','create');
     //     $this->middleware('auth')->except('update');
     // }
-
-    public function index()
-    {
-        $posts = Post::all();
-        return view('posts.index',compact('posts'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -47,7 +46,34 @@ class PostController extends Controller
         }
         $request->merge(["user_id" => Auth::Id()]);
         $post = Post::create($request->all());
+
+        // Separar las etiquetas
+        $tags = explode("#",$request->tags);
+        foreach($tags as $tag){
+            if($tag != ""){
+                $etiqueta = Etiqueta::firstOrCreate(['nombre' => strtolower($tag)]);
+                $post->etiquetas()->attach($etiqueta->id);
+            }
+        }
+
+    if($request->hasFile('attachments')){
+            foreach($request->file('attachments') as $file){
+            $ruta = $file->store('','public');
+
+            $archivo = new File();
+            $archivo->ubicacion = $ruta;
+            $archivo->nombre_original = $file->getClientOriginalName();
+            $archivo->mime = $file->getClientMimeType();
+            $post->attachments()->save($archivo);
+        }
+    }
+
         return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function download($name){
+        $file = File::where('nombre_original',$name)->first();
+        return response()->download(storage_path('app/public/'.$file->ubicacion),$file->nombre_original);
     }
 
     /**
@@ -63,6 +89,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        Gate::authorize('update',$post);
+        $post->tags = $post->etiquetas->pluck('nombre')->implode("#");
+        $post->tags = "#".$post->tags;
         return view('posts.edit',compact('post'));
     }
 
@@ -75,9 +104,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        if($post->user->id != Auth::id()){
-            return redirect()->route('comunidades.show',$post->comunidad_id);
-        }
+        Gate::authorize('update',$post);
         if($post->comunidad->user_id != Auth::id()){
             $post->estado_moderacion = 'en revision';
         }
@@ -93,49 +120,61 @@ class PostController extends Controller
         if($post->user->id != Auth::id()){
             return redirect()->route('comunidades.show',$post->comunidad_id);
         }
+        foreach($post->attachments as $attachment){
+            Storage::delete('public/'.$attachment->ubicacion);
+        }
         $post->delete();
         return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 
     public function aceptar(Post $post){
-        if($post->comunidad->user_id != Auth::id()){
-            return redirect()->route('comunidades.show',$post->comunidad_id);
-        }
+        Gate::authorize('canAcceptOrDeny',$post);
         $post->estado_moderacion = 'aprobado';
         $post->save();
         return redirect()->route('comunidades.show',$post->comunidad_id);
     }
 
     public function like(Post $post){
-        $voto = DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->first();
+        $voto = $post->votos()->where('user_id',Auth::id())->first();
         if($voto != null && $voto->estado == 'positivo'){
             return redirect()->route('comunidades.show',$post->comunidad_id);
         }
         else if($voto != null && $voto->estado == 'negativo'){
-            DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
+            $post->votos()->where('user_id',Auth::id())->delete();
         }
-        DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'positivo']);
-        return redirect()->route('comunidades.show',$post->comunidad_id);
+        $vote = new Voto([
+            'user_id' => Auth::id(),
+            'estado' => 'positivo'
+        ]);
+        $post->votos()->save($vote);
+        return redirect()->back();
     }
 
     public function dislike(Post $post){
-        $voto = DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->first();
+        $voto = $post->votos()->where('user_id',Auth::id())->first();
         if($voto != null && $voto->estado == 'negativo'){
             return redirect()->route('comunidades.show',$post->comunidad_id);
         }
         else if($voto != null && $voto->estado == 'positivo'){
-            DB::table('votos')->where('user_id',Auth::id())->where('post_id',$post->id)->delete();
+            $post->votos()->where('user_id',Auth::id())->delete();
         }
-        DB::table('votos')->insert(['user_id'=>Auth::id(),'post_id'=>$post->id,'estado'=>'negativo']);
-        return redirect()->route('comunidades.show',$post->comunidad_id);
+        $vote = new Voto([
+            'user_id' => Auth::id(),
+            'estado' => 'negativo'
+        ]);
+        $post->votos()->save($vote);
+        return redirect()->back();
     }
 
     public function denegar(Post $post){
-        if($post->comunidad->user_id != Auth::id()){
-            return redirect()->route('comunidades.show',$post->comunidad_id);
-        }
+        Gate::authorize('canAcceptOrDeny',$post);
         $post->estado_moderacion = 'rechazado';
         $post->save();
         return redirect()->route('comunidades.show',$post->comunidad_id);
+    }
+
+    public function etiqueta(Etiqueta $etiqueta){
+        $posts = $etiqueta->posts;
+        return view('posts.etiqueta',compact('posts','etiqueta'));
     }
 }

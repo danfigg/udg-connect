@@ -1,11 +1,11 @@
 <x-app-layout>
-    <button class="my-3 mx-20 p-2.5 bg-gray-300 dark:bg-gray-900 dark:text-white rounded-lg text-sm">
+    <button class="my-3 mx-20 p-2.5 bg-gray-300 dark:bg-gray-700 dark:text-white rounded-lg text-sm">
         <a class="text-md" href="{{ route('comunidades.index')}}">← Regresar</a>
     </button>
-    <div class="my-2 mx-60 p-5 bg-gray-300 dark:bg-gray-900 dark:text-white rounded-lg">
+    <div class="my-2 mx-60 p-5 bg-gray-300 dark:bg-gray-700 dark:text-white rounded-xl">
         <h1 class="font-serif font-bold text-2xl text-center mb-4">Crear comunidad</h1>
 
-        <form action="{{ route('comunidades.store') }}" method="POST" class="space-y-3 mx-10">
+        <form action="{{ route('comunidades.store') }}" method="POST" class="space-y-3 mx-10" enctype="multipart/form-data">
             @csrf
         
             <div class="flex space-x-3">

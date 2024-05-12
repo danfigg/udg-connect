@@ -32,6 +32,10 @@
                 <small class="error">{{ $message }}</small>
               @enderror
           </div>
+          <div class="flex flex-col">
+            <label for="tags">Etiquetas:</label>
+            <input type="text" name="tags" id="tags" class="text-black" value="{{old('tags')??$post->tags??''}}">
+          </div>
           <x-button class="mt-5">Crear Post</x-button>
       </form>
   </div>
