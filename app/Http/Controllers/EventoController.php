@@ -84,7 +84,7 @@ class EventoController extends Controller
     {
         Gate::authorize('update', $evento);
         $evento->update($request->all());
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$evento->comunidad);
     }
 
     /**
@@ -106,17 +106,17 @@ class EventoController extends Controller
     {
         Gate::authorize('update', $evento);
         if($evento->comunidad->user_id != Auth::id()){
-            return redirect()->route('eventos.index');
+            return redirect()->route('comunidades.show',$evento->comunidad);
         }
         $evento->update(["estado_moderacion" => "aprobado"]);
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$evento->comunidad);
     }
 
     public function rechazar(Evento $evento)
     {
         Gate::authorize('update', $evento);
         $evento->update(["estado_moderacion" => "rechazado"]);
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$evento->comunidad);
     }
 
     public function registrar(Evento $evento)
@@ -127,7 +127,7 @@ class EventoController extends Controller
         }
         Mail::to(Auth::user()->email)->send(new EventRegistered($evento));
         $evento->participantes()->attach(Auth::id());
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$evento->comunidad);
     }
 
     public function desregistrar(Evento $evento)
@@ -136,7 +136,7 @@ class EventoController extends Controller
             return redirect()->route('comunidades.show', $evento->comunidad);
         }
         $evento->participantes()->detach(Auth::id());
-        return redirect()->route('eventos.index');
+        return redirect()->route('comunidades.show',$evento->comunidad);
     }
 
     public function api_index(Comunidad $comunidad)
