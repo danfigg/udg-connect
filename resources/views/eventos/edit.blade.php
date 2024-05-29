@@ -2,7 +2,7 @@
     <div class="flex flex-col items-center w-full mt-2">
       <h1 class="text-xl text-black dark:text-white">Editar Evento</h1>
       <div class="py-8 px-8 bg-gray-100 dark:bg-gray-900 w-[55%] min-w-[340px]">
-      <form action="{{route('eventos.update',$evento)}}" method="post" class="dark:text-white w-full">
+      <form action="{{route('eventos.update',$evento)}}" method="post" class="dark:text-white w-full" enctype="multipart/form-data">
         @csrf
         @method('PUT')
             <div class="flex flex-col mt-1">

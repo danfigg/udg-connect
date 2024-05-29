@@ -1,11 +1,11 @@
 <x-app-layout>
-    <button class="my-3 mx-20 p-2.5 bg-gray-400 rounded-lg text-sm dark:bg-gray-900 dark:text-white">
+    <button class="my-3 mx-20 p-2.5 bg-gray-400 rounded-lg dark:bg-gray-700 text-sm  dark:text-white">
         <a class="text-md" href="{{ route('comunidades.index')}}">← Regresar</a>
     </button>
-    <div class="my-2 mx-60 p-5 bg-gray-300 rounded-lg dark:bg-gray-900 dark:text-white">
+    <div class="my-2 mx-60 p-5 bg-gray-300 dark:bg-gray-700 rounded-lg  dark:text-white">
         <h1 class="font-serif font-bold text-2xl text-center mb-4">Editar comunidad</h1>
 
-        <form action="{{ route('comunidades.update', $comunidad->id) }}" method="POST" class="space-y-3 mx-10">
+        <form action="{{ route('comunidades.update', $comunidad->id) }}" method="POST" class="space-y-3 mx-10" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="flex space-x-3">

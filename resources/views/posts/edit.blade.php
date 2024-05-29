@@ -1,5 +1,5 @@
 <x-app-layout>
-<div class="flex flex-col items-center w-full mt-2">
+<div class="flex flex-col items-center w-full mt-6">
   <h1 class="text-xl text-white">Editar Post</h1>
   <div class="py-8 px-8 bg-gray-100 dark:bg-gray-900 w-[55%] min-w-[340px]">
   <form action="{{route('posts.update',$post)}}" method="post" class="dark:text-white w-full">
@@ -36,7 +36,7 @@
             <label for="tags">Etiquetas:</label>
             <input type="text" name="tags" id="tags" class="text-black" value="{{old('tags')??$post->tags??''}}">
           </div>
-          <x-button class="mt-5">Crear Post</x-button>
+          <x-button class="mt-5">Editar Post</x-button>
       </form>
   </div>
 </div>

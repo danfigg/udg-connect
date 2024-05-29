@@ -83,7 +83,20 @@ class EventoController extends Controller
     public function update(EventoRequest $request, Evento $evento)
     {
         Gate::authorize('update', $evento);
-        $evento->update($request->all());
+        if($request->hasFile('banner') && $request->file('banner')->isValid()){
+            if($evento->imagen){
+                Storage::disk('public')->delete($evento->imagen->ubicacion);
+                $evento->imagen->delete();
+            }
+            $ruta = $request->banner->store('','public');
+
+            $archivo = new Image();
+            $archivo->ubicacion = $ruta;
+            $archivo->nombre_original = $request->banner->getClientOriginalName();
+            $archivo->mime = $request->banner->getClientMimeType();
+            $evento->imagen()->save($archivo);
+        }
+        $evento->update($request->except('banner'));
         return redirect()->route('comunidades.show',$evento->comunidad);
     }
 

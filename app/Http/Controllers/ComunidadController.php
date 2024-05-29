@@ -79,6 +79,20 @@ class ComunidadController extends Controller
     public function update(ComunidadRequest $request, Comunidad $comunidad): RedirectResponse
     {
         Gate::authorize('update', $comunidad);
+        if($comunidad->banner() != null && $request->hasFile('banner') && $request->file('banner')->isValid()){
+            Storage::delete('public/'.$comunidad->banner->ubicacion);
+            
+            $ruta = $request->banner->store('','public');
+
+            $archivo = new Image();
+            $archivo->ubicacion = $ruta;
+            $archivo->nombre_original = $request->banner->getClientOriginalName();
+            $archivo->mime = $request->banner->getClientMimeType();
+            $comunidad->banner()->delete();
+
+            $comunidad->banner()->save($archivo);
+
+        }
         $comunidad->update($request->all()); 
         return redirect()->route('comunidades.index');
     }
