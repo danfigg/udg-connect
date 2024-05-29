@@ -65,6 +65,7 @@ class EventoController extends Controller
      */
     public function show(Evento $evento): View
     {
+        Gate::authorize('view', $evento);
         return view('eventos.show', compact('evento'));
     }
 

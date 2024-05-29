@@ -20,7 +20,7 @@
     </div>
     <div class="p-6" data-path="0.0.3.1.0.0.1">
         <a class="dark:text-gray-200 text-gray-500 hover:text-white" href="{{route('comunidades.show',$evento->comunidad)}}">comunidad/{{$evento->comunidad->nombre}}</a>
-        <h2 class="font-bold font-heading mb-2" data-config-id="auto-txt-15-2" data-path="0.0.3.1.0.0.1.0">{{$evento->nombre}}</h2>
+        <a class="font-bold font-heading mb-2 hover:underline" data-config-id="auto-txt-15-2" data-path="0.0.3.1.0.0.1.0" href="{{route('eventos.show',$evento)}}">{{$evento->nombre}}</a>
         <div class="flex items-center gap-2 flex-wrap mb-4" data-path="0.0.3.1.0.0.1.1">
             <p class="dark:text-gray-200 text-gray-500 text-sm" data-config-id="auto-txt-16-2" data-path="0.0.3.1.0.0.1.1.0">{{$evento->date()}}</p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none" data-config-id="auto-svg-11-2" data-path="0.0.3.1.0.0.1.1.1"><circle cx="2" cy="2" r="2" fill="#D1D1D1" data-path="0.0.3.1.0.0.1.1.1.0"></circle></svg>

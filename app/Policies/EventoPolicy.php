@@ -9,6 +9,12 @@ use Illuminate\Auth\Access\Response;
 class EventoPolicy
 {
     
+    public function view(User $user, Evento $evento): Response
+    {
+        return $user->id === $evento->user_id
+            ? Response::allow()
+            : Response::deny('No puedes ver un evento que no creaste');
+    }
 
     /**
      * Determine whether the user can update the model.
